@@ -27,6 +27,7 @@ export default function Home() {
     <main className="bg-gradient-to-b from-white via-slate-50 to-slate-100 text-gray-800 overflow-x-hidden">
       {/* Hero Section */}
       <section className="container mx-auto px-4 sm:px-6 py-8 sm:py-12 md:py-24 grid grid-cols-1 md:grid-cols-2 items-center gap-6 md:gap-10">
+        {/* My Hero Text Animation with smooth Fade in and move up */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
@@ -40,6 +41,7 @@ export default function Home() {
             Monitor performance, get live market data, and gain valuable financial insights.
           </p>
           {user ? (
+            // Butoon Interaction
             <motion.div whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.98 }} className="flex justify-center md:justify-start">
               <Link
                 href="/Dashboard"
@@ -60,7 +62,7 @@ export default function Home() {
           )}
         </motion.div>
 
-        {/* Illustration */}
+        {/* Image and it's styles and animation */}
         <motion.div
           initial={{ opacity: 0, scale: 0.95 }}
           animate={{ opacity: 1, scale: 1 }}
