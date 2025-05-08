@@ -26,7 +26,7 @@ export default function Home() {
   return (
     <main className="bg-gradient-to-b from-white via-slate-50 to-slate-100 text-gray-800 overflow-x-hidden">
       {/* Hero Section */}
-      <section className="container mx-auto px-4 sm:px-6 py-8 sm:py-12 md:py-24 grid grid-cols-1 md:grid-cols-2 items-center gap-6 md:gap-10">
+      <section className="container mx-auto px-4 sm:px-6 py-8 sm:py-12 md:py-24 grid grid-cols-1 md:grid-cols-2 items-center gap-6 md:gap-10 mt-[72px]">
         {/* My Hero Text Animation with smooth Fade in and move up */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
