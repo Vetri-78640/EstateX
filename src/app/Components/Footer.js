@@ -8,14 +8,20 @@ export default function Footer() {
   const [showPopup, setShowPopup] = useState(false);
   const [error, setError] = useState('');
 
-  const handleSubscribe = (e) => {
+  const handleSubscribe = (e) => { //form logic for email validation which is the strictest email validation ever that i tried to implement//
     e.preventDefault();
-
-    if (!email || !email.includes('@') || !email.includes('.')) {
+    const strictEmailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+    const localPart = email.split('@')[0];
+    if (
+      !strictEmailRegex.test(email) ||
+      email.includes('..') ||              
+      localPart.endsWith('.') ||            
+      localPart.startsWith('.')             
+    ) {
       setError('Please enter a valid email address.');
       return;
     }
-
+  
     setError('');
     setShowPopup(true);
     setTimeout(() => setShowPopup(false), 3000);
@@ -25,12 +31,12 @@ export default function Footer() {
   return (
     <footer className="mt-20 bg-gradient-to-tr from-slate-800 via-slate-900 to-black text-white border-t border-slate-700 shadow-inner relative">
       <div className="max-w-6xl mx-auto px-6 py-10 grid grid-cols-1 md:grid-cols-3 gap-8 text-sm md:text-base">
-        <div className="space-y-2">
+        <div className="space-y-2"> {/* Footer Summary*/}
           <h2 className="text-lg font-semibold tracking-wide text-slate-100">Real Estate Tracker</h2>
-          <p className="text-slate-300">Track investments, analyze trends, and grow your portfolio.</p>
+          <p className="text-slate-300">Track investments, analyze trends,rental income, and grow your portfolio.</p>
         </div>
 
-        <div className="space-y-2">
+        <div className="space-y-2">    {/* footer quick links */}
           <h3 className="text-md font-semibold text-slate-100">Quick Links</h3>
           <ul className="space-y-1 text-slate-400">
             <li><a href="#" className="hover:text-white transition">Home</a></li>
@@ -40,7 +46,7 @@ export default function Footer() {
           </ul>
         </div>
 
-        <div className="space-y-2">
+        <div className="space-y-2"> {/*Stay updated with our newsletter(subscribe) */}
           <h3 className="text-md font-semibold text-slate-100">Stay Updated</h3>
           <p className="text-slate-400">Join our newsletter for updates on market trends and features.</p>
           <form onSubmit={handleSubscribe} className="flex mt-2">
