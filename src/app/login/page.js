@@ -63,7 +63,7 @@ export default function Login() {
             Welcome back
           </h2>
           <p className="mt-2 text-center text-sm text-gray-600">
-            Don't have an account?{' '}
+            Don&apos;t have an account?{' '}
             <Link href="/signup" className="font-medium text-blue-600 hover:text-blue-500 transition-colors">
               Sign up
             </Link>

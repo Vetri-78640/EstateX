@@ -197,7 +197,7 @@ export default function Home() {
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true, margin: "-50px" }}
               >
-                <p className="italic text-sm sm:text-base text-gray-700">"{testimonial}"</p>
+                <p className="italic text-sm sm:text-base text-gray-700">&quot;{testimonial}&quot;</p>
               </motion.blockquote>
             ))}
           </div>

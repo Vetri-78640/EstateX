@@ -1,4 +1,5 @@
 // src/app/Components/PropertyCardsGrid.js
+import Image from 'next/image';
 export default function PropertyCardsGrid({ properties }) {
   return (
     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
@@ -9,9 +10,10 @@ export default function PropertyCardsGrid({ properties }) {
         >
           {/* Property Image */}
           <div className="relative h-48 w-full overflow-hidden">
-            <img 
+            <Image
               src={p.image || `https://source.unsplash.com/800x600/?house,${p.name.toLowerCase().replace(/\s+/g, ',')}`} 
               alt={p.name}
+              fill
               className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
             />
             <div className="absolute top-4 right-4">
