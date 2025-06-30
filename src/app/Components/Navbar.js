@@ -59,7 +59,7 @@ const Navbar = () => {
               </li>
               <li>
                 <Link 
-                  href="/insights" 
+                  href="/Insights" 
                   className="hover:text-[#2dd4bf] transition-colors duration-200"
                 >Insights</Link>
               </li>
