@@ -101,77 +101,62 @@ const Navbar = () => {
         </ul>
 
         {/* Mobile menu */}
-        <div
-          className={`${
-            isMenuOpen ? 'block' : 'hidden'
-          } md:hidden fixed top-[72px] left-0 right-0 bg-[#1f2937] shadow-lg z-40`}
-        >
-          <ul className="px-4 py-2 space-y-4 flex flex-col items-center">
-            {user ? (
-              <>
-                <li className="w-full text-center">
-                  <Link 
-                    href="/Dashboard" 
-                    className="block hover:text-[#2dd4bf] transition-colors duration-200"
-                    onClick={toggleMenu}
-                  >Dashboard</Link>
-                </li>
-                <li className="w-full text-center">
-                  <Link 
-                    href="/properties" 
-                    className="block hover:text-[#2dd4bf] transition-colors duration-200"
-                    onClick={toggleMenu}
-                  >Properties</Link>
-                </li>
-                <li className="w-full text-center">
-                  <Link 
-                    href="/insights" 
-                    className="block hover:text-[#2dd4bf] transition-colors duration-200"
-                    onClick={toggleMenu}
-                  >Insights</Link>
-                </li>
-                <li className="flex flex-col items-center gap-2 py-2 w-full">
-                  {user.photoURL && (
-                    <Image
-                      src={user.photoURL}
-                      alt={user.displayName || 'User'}
-                      width={32}
-                      height={32}
-                      className="rounded-full"
-                    />
-                  )}
-                  <span className="text-sm">{user.displayName}</span>
-                  <button
-                    onClick={() => {
-                      logout();
-                      toggleMenu();
-                    }}
-                    className="px-4 py-2 bg-red-600 hover:bg-red-700 rounded-md transition-colors duration-200"
-                  >
-                    Logout
-                  </button>
-                </li>
-              </>
-            ) : (
-              <>
-                <li className="w-full text-center">
-                  <Link 
-                    href="/login" 
-                    className="block hover:text-[#2dd4bf] transition-colors duration-200"
-                    onClick={toggleMenu}
-                  >Login</Link>
-                </li>
-                <li className="w-full text-center">
-                  <Link 
-                    href="/signup" 
-                    className="inline-block px-4 py-2 bg-[#2dd4bf] hover:bg-[#2dd4bf]/80 rounded-md transition-colors duration-200"
-                    onClick={toggleMenu}
-                  >Sign Up</Link>
-                </li>
-              </>
-            )}
-          </ul>
-        </div>
+        {isMenuOpen && (
+          <div className="fixed inset-0 z-50 bg-black bg-opacity-80 flex flex-col justify-center items-center transition-all">
+            <button
+              onClick={toggleMenu}
+              className="absolute top-6 right-6 text-white text-3xl focus:outline-none"
+              aria-label="Close menu"
+            >
+              &times;
+            </button>
+            <ul className="w-full flex flex-col items-center gap-8 text-2xl font-semibold">
+              {user ? (
+                <>
+                  <li className="w-full text-center">
+                    <Link href="/Dashboard" className="block py-3 hover:text-[#2dd4bf] transition-colors duration-200" onClick={toggleMenu}>Dashboard</Link>
+                  </li>
+                  <li className="w-full text-center">
+                    <Link href="/properties" className="block py-3 hover:text-[#2dd4bf] transition-colors duration-200" onClick={toggleMenu}>Properties</Link>
+                  </li>
+                  <li className="w-full text-center">
+                    <Link href="/Insights" className="block py-3 hover:text-[#2dd4bf] transition-colors duration-200" onClick={toggleMenu}>Insights</Link>
+                  </li>
+                  <li className="flex flex-col items-center gap-4 py-4 w-full">
+                    {user.photoURL && (
+                      <Image
+                        src={user.photoURL}
+                        alt={user.displayName || 'User'}
+                        width={48}
+                        height={48}
+                        className="rounded-full border-2 border-white"
+                      />
+                    )}
+                    <span className="text-lg">{user.displayName}</span>
+                    <button
+                      onClick={() => {
+                        logout();
+                        toggleMenu();
+                      }}
+                      className="px-6 py-3 bg-red-600 hover:bg-red-700 rounded-lg text-white text-lg font-semibold transition-colors duration-200"
+                    >
+                      Logout
+                    </button>
+                  </li>
+                </>
+              ) : (
+                <>
+                  <li className="w-full text-center">
+                    <Link href="/login" className="block py-3 hover:text-[#2dd4bf] transition-colors duration-200" onClick={toggleMenu}>Login</Link>
+                  </li>
+                  <li className="w-full text-center">
+                    <Link href="/signup" className="inline-block px-8 py-3 bg-[#2dd4bf] hover:bg-[#2dd4bf]/80 rounded-lg text-white text-lg font-semibold transition-colors duration-200" onClick={toggleMenu}>Sign Up</Link>
+                  </li>
+                </>
+              )}
+            </ul>
+          </div>
+        )}
       </div>
     </nav>
   )

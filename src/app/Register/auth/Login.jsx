@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../../context/AuthContext';
 import { Building } from 'lucide-react';
+import Image from 'next/image';
 
 const Login = () => {
   const [email, setEmail] = useState('');
@@ -148,10 +149,13 @@ const Login = () => {
               disabled={loading}
               className="w-full flex items-center justify-center px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-md shadow-sm text-sm font-medium text-gray-700 dark:text-gray-200 bg-white dark:bg-gray-800 hover:bg-gray-50 dark:hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 disabled:opacity-70 disabled:cursor-not-allowed transition duration-150"
             >
-              <img
+              <Image
                 className="h-5 w-5 mr-2"
                 src="https://www.gstatic.com/firebasejs/ui/2.0.0/images/auth/google.svg"
                 alt="Google logo"
+                width={20}
+                height={20}
+                priority={false}
               />
               Sign in with Google
             </button>

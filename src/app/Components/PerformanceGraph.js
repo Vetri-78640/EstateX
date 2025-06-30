@@ -70,17 +70,19 @@ export default function PerformanceGraph({ properties }) {
   };
 
   return (
-    <div className="bg-white p-6 rounded-xl shadow-lg hover:shadow-xl transition-shadow duration-300">
-      <h2 className="text-xl font-bold mb-6 text-gray-800">Income vs Expenses</h2>
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+    <div className="bg-white p-8 md:p-16 rounded-xl shadow-lg hover:shadow-xl transition-shadow duration-300 w-full">
+      <h2 className="text-3xl font-extrabold mb-10 text-gray-800 text-center tracking-tight">Income vs Expenses</h2>
+      <div className="flex flex-wrap justify-center gap-16 w-full">
         {properties.map((property, index) => (
-          <div key={property.id} className="flex flex-col items-center">
-            <h3 className="text-lg font-semibold mb-4 text-gray-700">{property.name}</h3>
-            <div className="w-[200px] h-[200px]">
-              <Pie data={createPropertyChart(property)} options={options} />
+          <div key={property.id} className="flex flex-col items-center justify-center w-full md:w-1/2 lg:w-1/3 px-4">
+            <h3 className="text-xl font-semibold mb-6 text-gray-700 text-center">{property.name}</h3>
+            <div className="flex justify-center items-center w-full mb-6">
+              <div className="w-full max-w-md h-[320px]">
+                <Pie data={createPropertyChart(property)} options={options} />
+              </div>
             </div>
-            <div className="mt-4 text-sm text-gray-600">
-              <p>Net Income: ${(property.rentalIncome - property.expenses).toLocaleString()}</p>
+            <div className="mt-2 text-base text-gray-700 text-center font-medium">
+              Net Income: <span className="font-bold text-gray-900">${(property.rentalIncome - property.expenses).toLocaleString()}</span>
             </div>
           </div>
         ))}

@@ -119,7 +119,7 @@ export default function Insights() {
               <div className="flex-1">
                 <h2 className="text-2xl font-bold text-blue-700 mb-2">U.S. Real Estate Outlook</h2>
                 <p className="text-gray-700 mb-3 leading-relaxed text-lg">{data.overallSummary.investmentStatement}</p>
-                <p className="italic text-blue-600 font-semibold text-lg">"{data.overallSummary.quote}"</p>
+                <p className="italic text-blue-600 font-semibold text-lg">&quot;{data.overallSummary.quote}&quot;</p>
               </div>
               <div className="flex-1 flex flex-col items-center justify-center">
                 <div className="bg-blue-50 rounded-2xl p-8 text-center shadow-md border border-blue-100">
@@ -170,7 +170,7 @@ export default function Insights() {
                     </div>
                   </div>
                   <div className="mt-6 pt-4 border-t border-slate-100">
-                    <span className="italic text-blue-600 group-hover:text-blue-800 transition-colors text-base block text-center">"{state.quote}"</span>
+                    <span className="italic text-blue-600 group-hover:text-blue-800 transition-colors text-base block text-center">&quot;{state.quote}&quot;</span>
                   </div>
                 </motion.div>
               ))}
