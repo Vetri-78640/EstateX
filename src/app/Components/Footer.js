@@ -29,7 +29,7 @@ export default function Footer() {
   };
 
   return (
-    <footer  style={{ borderRadius: '9999px' }} className="mt-20 mb-10 bg-white/20 backdrop-blur-md border border-white/30 text-slate-800 px-4 sm:px-10 py-8 shadow-lg w-[98%] max-w-[1600px] mx-auto rounded-3xl flex flex-col items-center justify-between relative dark:bg-slate-900/60 dark:text-slate-100 dark:border-white/20">
+    <footer  style={{ borderRadius: '9999px' }} className="mt-20 mb-10 bg-white/20 backdrop-blur-md border border-white/30 text-slate-800 px-4 sm:px-10 py-8 shadow-lg w-[80%] max-w-[1600px] mx-auto rounded-3xl flex flex-col items-center justify-between relative dark:bg-slate-900/60 dark:text-slate-100 dark:border-white/20">
       <div className="w-full flex flex-col md:flex-row gap-6 text-sm md:text-base items-center justify-center gap-x-8">
         <div className="space-y-0.5 w-full md:w-auto text-center md:text-left"> {/* Footer Summary*/}
           <h2 className="text-lg font-semibold tracking-wide text-slate-900 dark:text-white">Real Estate Tracker</h2>
@@ -49,7 +49,7 @@ export default function Footer() {
             />
             <button
               type="submit"
-              className="btn-glass border border-blue-300 text-blue-700 hover:border-blue-400 hover:text-blue-800 px-4 py-2 rounded-full transition dark:border-blue-200/30 dark:text-blue-100 dark:hover:text-blue-200 w-full sm:w-auto"
+              className="btn-glass border border-blue-300 text-blue-700 hover:border-blue-400 hover:text-blue-800 px-4 py-2 rounded-full transition dark:border-blue-200/30 dark:text-blue-100 dark:hover:text-blue-200 w-full sm:w-auto"  style={{ borderRadius: '9999px' }}
             >
               Subscribe
             </button>
