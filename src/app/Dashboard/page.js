@@ -2,9 +2,6 @@
 
 import { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
-import PropertyCardsGrid from '../Components/PropertyCard';
-import StatsPanel from '../Components/StatsPanel';
-import PerformanceGraph from '../Components/PerformanceGraph';
 import { motion } from 'framer-motion';
 import Image from 'next/image';
 
@@ -12,6 +9,7 @@ const Dashboard = () => {
   const [myProperties, setMyProperties] = useState([]);
   const [loading, setLoading] = useState(true);
   const [mounted, setMounted] = useState(false);
+  const [fadingOut, setFadingOut] = useState({});
   const router = useRouter();
 
   // Map of city/location to random lat/lng
@@ -54,17 +52,24 @@ const Dashboard = () => {
   }, []);
 
   // Remove (sell) property
-  const handleSell = (id) => {
+  const handleSell = async (id) => {
+    setFadingOut((prev) => ({ ...prev, [id]: true }));
+    await new Promise((res) => setTimeout(res, 1200)); // 1.2s delay for realism
     const updated = myProperties.filter((p) => p.id !== id);
     setMyProperties(updated);
     localStorage.setItem("myProperties", JSON.stringify(updated));
+    setFadingOut((prev) => {
+      const copy = { ...prev };
+      delete copy[id];
+      return copy;
+    });
   };
 
   // Empty state for new users
   if (!mounted) return null;
   if (loading) {
     return (
-      <div className="min-h-screen bg-gradient-to-b from-white via-slate-50 to-slate-100">
+      <div className="min-h-screen bg-transparent">
         <div className="container mx-auto px-4 py-8 mt-[72px]">
           <div className="flex items-center justify-center min-h-[60vh]">
             <div className="text-center">
@@ -79,11 +84,12 @@ const Dashboard = () => {
 
   if (!myProperties || myProperties.length === 0) {
     return (
-      <div className="min-h-screen bg-gradient-to-b from-white via-slate-50 to-slate-100 flex items-center justify-center">
-        <div className="max-w-md mx-auto bg-white rounded-2xl shadow-xl p-8 flex flex-col items-center">
+      <div className="min-h-screen bg-transparent flex items-center justify-center" >
+        <div className="max-w-md mx-auto bg-white/20 backdrop-blur-md border border-white/30 shadow-lg rounded-3xl p-8 flex flex-col items-center" style={{ borderRadius: '9999px' }}>
           <p className="text-xl font-semibold text-blue-700 mb-4 text-center">&quot;In real estate, you make your money when you buy, not when you sell.&quot;</p>
           <button
-            className="mt-2 px-6 py-3 bg-blue-600 text-white rounded-lg font-semibold shadow hover:bg-blue-700 transition"
+            className="mt-2 px-6 py-3 btn-glass border border-blue-400 rounded-full font-semibold shadow hover:border-blue-500 hover:text-blue-800 bg-white/30 backdrop-blur text-blue-700 transition"
+            style={{ borderRadius: '9999px' }}
             onClick={() => router.push("/properties")}
           >
             Buy Properties
@@ -95,14 +101,14 @@ const Dashboard = () => {
 
   // Show bought properties
   return (
-    <div className="min-h-screen bg-gradient-to-b from-white via-slate-50 to-slate-100">
+    <div className="min-h-screen bg-transparent">
       <div className="container mx-auto px-2 sm:px-4 py-8 mt-[72px]">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5 }}
         >
-          <h1 className="text-3xl sm:text-4xl font-bold text-gray-800 mb-10 text-center">Dashboard</h1>
+          <h1 className="text-3xl sm:text-4xl font-bold text-gray-800 mb-10 text-center dark:text-slate-100">Dashboard</h1>
           <div className="flex flex-wrap justify-center gap-8">
             {myProperties.map((property) => {
               let statusBadge = null;
@@ -114,48 +120,51 @@ const Dashboard = () => {
                 );
               }
               return (
-                <div
+                <motion.div
                   key={property.id}
-                  className="bg-white rounded-2xl shadow-xl hover:shadow-2xl hover:scale-[1.02] transition-all duration-300 w-full max-w-md flex flex-col border border-gray-100 overflow-hidden group"
+                  className="bg-glass rounded-2xl shadow-xl w-full max-w-md flex flex-col border border-gray-100 overflow-hidden transform dark:border-white/20"
                   style={{ minWidth: '320px' }}
+                  whileHover={{ scale: 1.05 }}
+                  transition={{ type: 'spring', stiffness: 260, damping: 20 }}
                 >
-                  <div className="relative">
+                  <div className="relative w-full aspect-[4/3] min-h-[192px] max-h-[240px] rounded-t-xl overflow-hidden bg-white/10">
                     <Image
                       src={property.image}
                       alt={property.name}
-                      width={400}
-                      height={192}
-                      className="w-full h-48 object-cover rounded-t-2xl"
+                      fill
+                      className="object-cover"
                       priority={true}
                     />
-                    {statusBadge}
                   </div>
                   <div className="p-5 flex flex-col gap-2">
-                    <h3 className="text-xl font-bold text-blue-800 mb-1 truncate">{property.name}</h3>
-                    <p className="text-gray-500 mb-1 text-sm truncate">{property.location}</p>
+                    <h3 className="text-xl font-bold text-blue-800 mb-1 truncate dark:text-blue-200">{property.name}</h3>
+                    <p className="text-gray-500 mb-1 text-sm truncate dark:text-slate-300">{property.location}</p>
                     <div className="flex flex-wrap gap-4 mb-2 text-sm">
-                      <span className="text-gray-700 font-semibold">Value: <span className="text-gray-900">${property.value.toLocaleString()}</span></span>
-                      <span className="text-gray-700 font-semibold">ROI: <span className="text-blue-700">{property.roi}%</span></span>
+                      <span className="text-gray-700 font-semibold dark:text-blue-100">Value: <span className="text-gray-900 dark:text-blue-200">${property.value.toLocaleString()}</span></span>
+                      <span className="text-gray-700 font-semibold dark:text-blue-100">ROI: <span className="text-blue-700 dark:text-blue-200">{property.roi}%</span></span>
                     </div>
                     {property.isRented && (
-                      <span className="text-green-700 font-semibold text-sm">Rental Income: ${property.rentalIncome}</span>
+                      <span className="text-green-700 font-semibold text-sm dark:text-green-300">Rental Income: ${property.rentalIncome}</span>
                     )}
                     <div className="flex gap-2 mt-3">
                       <button
-                        className="flex-1 px-4 py-2 bg-blue-600 text-white rounded-lg font-semibold shadow hover:bg-blue-700 transition"
+                        className="flex-1 px-4 py-2 btn-glass font-semibold shadow transition rounded-full dark:text-blue-100"
+                        style={{ borderRadius: '9999px' }}
                         onClick={e => { e.stopPropagation(); router.push(`/property/${property.id}`); }}
                       >
                         View Details
                       </button>
                       <button
-                        className="flex-1 px-4 py-2 bg-red-500 text-white rounded-lg font-semibold shadow hover:bg-red-600 transition"
+                        className="flex-1 px-4 py-2 btn-glass font-semibold shadow transition disabled:opacity-60 rounded-full dark:text-blue-100"
+                        style={{ borderRadius: '9999px' }}
                         onClick={e => { e.stopPropagation(); handleSell(property.id); }}
+                        disabled={!!fadingOut[property.id]}
                       >
-                        Sell
+                        {fadingOut[property.id] ? 'Selling...' : 'Sell'}
                       </button>
                     </div>
                   </div>
-                </div>
+                </motion.div>
               );
             })}
           </div>

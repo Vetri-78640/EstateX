@@ -2,11 +2,13 @@
 @tailwind components;
 @tailwind utilities;
 
+/* Smooth scroll for modern browsers */
 html {
   scroll-behavior: smooth;
+  transition: background-color 0.3s ease, color 0.3s ease;
 }
 
-/* Optimize animations for reduced motion preferences */
+/* Respect reduced motion preferences */
 @media (prefers-reduced-motion: reduce) {
   * {
     animation-duration: 0.01ms !important;
@@ -14,4 +16,67 @@ html {
     transition-duration: 0.01ms !important;
     scroll-behavior: auto !important;
   }
+}
+
+/* Glassmorphism background card */
+.bg-glass {
+  background: rgba(255, 255, 255, 0.32);
+  box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.18),
+              0 0 0 1.5px rgba(255, 255, 255, 0.25) inset;
+  backdrop-filter: blur(22px) saturate(180%);
+  -webkit-backdrop-filter: blur(22px) saturate(180%);
+  border-radius: 1.25rem;
+  border: 1.5px solid rgba(255, 255, 255, 0.32);
+  transition: box-shadow 0.3s, border 0.3s, background 0.3s;
+}
+
+.dark .bg-glass {
+  background: rgba(24, 28, 40, 0.55);
+  box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.32),
+              0 0 0 1.5px rgba(255, 255, 255, 0.10) inset;
+  border: 1.5px solid rgba(255, 255, 255, 0.10);
+}
+
+/* Reusable glassy button */
+.btn-glass {
+  background: rgba(255, 255, 255, 0.22);
+  box-shadow: 0 4px 24px 0 rgba(31, 38, 135, 0.12);
+  backdrop-filter: blur(8px) saturate(180%);
+  -webkit-backdrop-filter: blur(8px) saturate(180%);
+  border-radius: 0.75rem;
+  border: 1.5px solid rgba(255, 255, 255, 0.32);
+  color: #222;
+  transition: background 0.2s, color 0.2s, box-shadow 0.2s, border 0.2s;
+  outline: none;
+  position: relative;
+  z-index: 1;
+}
+
+.dark .btn-glass {
+  background: rgba(24, 28, 40, 0.55);
+  color: #f3f4f6;
+  border: 1.5px solid rgba(255, 255, 255, 0.10);
+  box-shadow: 0 4px 24px 0 rgba(0, 0, 0, 0.24);
+}
+
+/* Glow on focus */
+.glow-outline {
+  box-shadow: 0 0 0 4px #38bdf8, 0 0 16px 4px #38bdf833, 0 0 0 1.5px #fff inset;
+  border-color: #38bdf8;
+  transition: box-shadow 0.2s, border 0.2s;
+}
+
+/* Background animation */
+@keyframes gradient-move {
+  0%, 100% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+}
+
+.animate-gradient-move {
+  background-size: 200% 200%;
+  animation: gradient-move 16s ease-in-out infinite;
 }

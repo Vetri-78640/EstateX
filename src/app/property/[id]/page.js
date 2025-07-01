@@ -14,6 +14,7 @@ export default function PropertyDetails() {
   const [isBought, setIsBought] = useState(false);
   const [isRented, setIsRented] = useState(false);
   const [occupied, setOccupied] = useState(false);
+  const [actionLoading, setActionLoading] = useState({ buy: false, sell: false, rent: false });
 
   // Map of city/location to random lat/lng
   const locationToLatLng = {
@@ -67,15 +68,20 @@ export default function PropertyDetails() {
       });
   }, [id]);
 
-  const handleBuy = () => {
+  const handleBuy = async () => {
+    setActionLoading((prev) => ({ ...prev, buy: true }));
+    await new Promise((res) => setTimeout(res, 1400)); // 1.4s delay
     const stored = localStorage.getItem("myProperties");
     let arr = stored ? JSON.parse(stored) : [];
     arr.push({ ...property, isRented: false, occupied: false });
     localStorage.setItem("myProperties", JSON.stringify(arr));
     setIsBought(true);
+    setActionLoading((prev) => ({ ...prev, buy: false }));
   };
 
-  const handleSell = () => {
+  const handleSell = async () => {
+    setActionLoading((prev) => ({ ...prev, sell: true }));
+    await new Promise((res) => setTimeout(res, 1500)); // 1.5s delay
     const stored = localStorage.getItem("myProperties");
     let arr = stored ? JSON.parse(stored) : [];
     arr = arr.filter((p) => String(p.id) !== String(id));
@@ -83,11 +89,13 @@ export default function PropertyDetails() {
     setIsBought(false);
     setIsRented(false);
     setOccupied(false);
-    // Optionally redirect to dashboard or properties
-    router.push("/dashboard");
+    setActionLoading((prev) => ({ ...prev, sell: false }));
+    router.push("/Dashboard");
   };
 
-  const handleToggleRent = () => {
+  const handleToggleRent = async () => {
+    setActionLoading((prev) => ({ ...prev, rent: true }));
+    await new Promise((res) => setTimeout(res, 1200)); // 1.2s delay
     const stored = localStorage.getItem("myProperties");
     let arr = stored ? JSON.parse(stored) : [];
     arr = arr.map((p) =>
@@ -98,6 +106,7 @@ export default function PropertyDetails() {
     localStorage.setItem("myProperties", JSON.stringify(arr));
     setIsRented((prev) => !prev);
     setOccupied((prev) => !prev);
+    setActionLoading((prev) => ({ ...prev, rent: false }));
   };
 
   if (loading || !property) {
@@ -117,8 +126,8 @@ export default function PropertyDetails() {
   const { lat, lng } = locationToLatLng[loc];
   const embedUrl = `https://maps.google.com/maps?q=${lat},${lng}&z=15&output=embed`;
   return (
-    <div className="min-h-screen bg-gradient-to-b from-white via-slate-50 to-slate-100 py-12 mt-[72px]">
-      <div className="max-w-3xl mx-auto bg-white rounded-2xl shadow-2xl p-8 transition-transform duration-300 hover:shadow-[0_8px_40px_rgba(0,0,0,0.18)] hover:scale-[1.025]">
+    <div className="min-h-screen bg-transparent py-12 mt-[72px]">
+      <div className="max-w-3xl mx-auto bg-glass rounded-2xl shadow-2xl p-8">
         <Image
           src={property.image}
           alt={property.name}
@@ -127,24 +136,24 @@ export default function PropertyDetails() {
           className="w-full h-64 object-cover rounded-xl mb-6"
           priority={true}
         />
-        <h1 className="text-3xl font-bold text-blue-800 mb-2">{property.name}</h1>
-        <p className="text-gray-600 mb-2">{property.location}</p>
+        <h1 className="text-3xl font-bold text-blue-800 mb-2 dark:text-blue-200">{property.name}</h1>
+        <p className="text-gray-600 mb-2 dark:text-slate-300">{property.location}</p>
         <div className="grid grid-cols-2 gap-4 mb-4">
-          <div className="bg-gray-50 p-3 rounded-lg">
-            <p className="text-sm text-gray-600">Value</p>
-            <p className="font-semibold text-gray-800">${property.value.toLocaleString()}</p>
+          <div className="bg-glass p-3 rounded-lg dark:text-blue-100 text-center" style={{ borderRadius: '9999px' }}>
+            <p className="text-sm text-gray-600 dark:text-slate-300">Value</p>
+            <p className="font-semibold text-gray-800 dark:text-blue-200">${property.value.toLocaleString()}</p>
           </div>
-          <div className="bg-gray-50 p-3 rounded-lg">
-            <p className="text-sm text-gray-600">ROI</p>
-            <p className="font-semibold text-gray-800">{property.roi}%</p>
+          <div className="bg-glass p-3 rounded-lg dark:text-blue-100 text-center" style={{ borderRadius: '9999px' }}>
+            <p className="text-sm text-gray-600 dark:text-slate-300">ROI</p>
+            <p className="font-semibold text-gray-800 dark:text-blue-200">{property.roi}%</p>
           </div>
-          <div className="bg-gray-50 p-3 rounded-lg">
-            <p className="text-sm text-gray-600">Rental Income</p>
-            <p className="font-semibold text-green-700">${property.rentalIncome}</p>
+          <div className="bg-glass p-3 rounded-lg dark:text-blue-100 text-center" style={{ borderRadius: '9999px' }}>
+            <p className="text-sm text-gray-600 dark:text-slate-300">Rental Income</p>
+            <p className="font-semibold text-green-700 dark:text-green-300">${property.rentalIncome}</p>
           </div>
-          <div className="bg-gray-50 p-3 rounded-lg">
-            <p className="text-sm text-gray-600">Expenses</p>
-            <p className="font-semibold text-red-600">${property.expenses}</p>
+          <div className="bg-glass p-3 rounded-lg dark:text-blue-100 text-center" style={{ borderRadius: '9999px' }}>
+            <p className="text-sm text-gray-600 dark:text-slate-300">Expenses</p>
+            <p className="font-semibold text-red-600 dark:text-red-300">${property.expenses}</p>
           </div>
         </div>
         <div className="mb-6">
@@ -162,26 +171,36 @@ export default function PropertyDetails() {
         <div className="flex gap-4 mb-6">
           {!isBought && (
             <button
-              className="px-6 py-3 bg-blue-600 text-white rounded-lg font-semibold shadow hover:bg-blue-700 transition"
+              className="btn-glass px-6 py-3 rounded-full border border-white/30 shadow text-white backdrop-blur-md bg-white/10 dark:text-blue-100"
+              style={{ borderRadius: '9999px' }}
               onClick={handleBuy}
+              disabled={actionLoading.buy}
             >
-              Buy
+              {actionLoading.buy ? (
+                <span className="flex items-center"><span className="animate-spin h-5 w-5 mr-2 border-b-2 border-white rounded-full inline-block"></span>Buying...</span>
+              ) : 'Buy'}
             </button>
           )}
           {isBought && (
             <button
-              className="px-6 py-3 bg-red-500 text-white rounded-lg font-semibold shadow hover:bg-red-600 transition"
+              className="px-6 py-3 btn-glass font-semibold shadow transition disabled:opacity-60 rounded-full dark:text-blue-100" style={{ borderRadius: '9999px' }}
               onClick={handleSell}
+              disabled={actionLoading.sell}
             >
-              Sell
+              {actionLoading.sell ? (
+                <span className="flex items-center"><span className="animate-spin h-5 w-5 mr-2 border-b-2 border-white rounded-full inline-block" ></span>Selling...</span>
+              ) : 'Sell'}
             </button>
           )}
           {isBought && (
             <button
-              className={`px-6 py-3 rounded-lg font-semibold shadow transition ${isRented ? 'bg-yellow-500 text-white hover:bg-yellow-600' : 'bg-green-600 text-white hover:bg-green-700'}`}
+              className={`px-6 py-3 btn-glass font-semibold shadow transition disabled:opacity-60 rounded-full dark:text-blue-100`} style={{ borderRadius: '9999px' }}
               onClick={handleToggleRent}
+              disabled={actionLoading.rent}
             >
-              {isRented ? 'Stop Renting' : 'Leave Rent'}
+              {actionLoading.rent ? (
+                <span className="flex items-center"><span className="animate-spin h-5 w-5 mr-2 border-b-2 border-white rounded-full inline-block"></span>{isRented ? 'Stopping...' : 'Leaving...'}</span>
+              ) : (isRented ? 'Stop Renting' : 'Leave Rent')}
             </button>
           )}
         </div>

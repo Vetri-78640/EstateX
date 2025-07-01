@@ -62,17 +62,19 @@ export default function Properties() {
   });
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-white via-slate-50 to-slate-100">
+    <div className="min-h-screen bg-transparent">
       <div className="container mx-auto px-4 py-8 mt-[72px]">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5 }}
         >
-          <h1 className="text-3xl sm:text-4xl font-bold text-gray-800 mb-8">Available Properties</h1>
+          <h1 className="text-3xl sm:text-4xl font-bold text-gray-800 mb-8 dark:text-white">Available Properties</h1>
           <div className="flex flex-col md:flex-row gap-8">
             <div className="md:w-1/4 w-full">
-              <FilterSidebar filters={filters} onChange={setFilters} />
+              <div className="sticky top-28 z-20">
+                <FilterSidebar filters={filters} onChange={setFilters} />
+              </div>
             </div>
             <div className="flex-1">
               <div className="mb-6">
@@ -85,43 +87,49 @@ export default function Properties() {
               >
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                   {filteredProperties.map((p) => (
-                    <div 
-                      key={p.id} 
-                      className="group bg-white rounded-xl shadow-lg hover:shadow-2xl transition-all duration-300 overflow-hidden border border-gray-100 hover:scale-[1.02] hover:-translate-y-1 flex flex-col"
+                    <motion.div
+                      key={p.id}
+                      className="relative group bg-white/10 dark:bg-white/10 backdrop-blur-2xl border border-white/20 dark:border-white/10 rounded-3xl shadow-2xl flex flex-col overflow-hidden transform transition-all duration-300 p-0"
+                      whileHover={{ scale: 1.045, boxShadow: '0 16px 48px 0 rgba(31,38,135,0.22)' }}
+                      whileTap={{ scale: 0.98 }}
+                      transition={{ type: 'spring', stiffness: 220, damping: 22 }}
                     >
                       {/* Property Image */}
-                      <div className="relative h-48 w-full overflow-hidden">
-                        <Image
-                          src={p.image || `https://source.unsplash.com/800x600/?house,${p.name.toLowerCase().replace(/\s+/g, ',')}`}
-                          alt={p.name}
-                          fill
-                          sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
-                          className="object-cover transition-transform duration-500 group-hover:scale-110"
-                          priority={true}
-                        />
+                      <div className="relative w-full aspect-[4/3] overflow-hidden rounded-t-3xl bg-white/10" style={{ minHeight: '210px', maxHeight: '260px' }}>
+                        <motion.div
+                          className="w-full h-full"
+                          whileHover={{ scale: 1.06, filter: 'brightness(1.08)' }}
+                          transition={{ type: 'spring', stiffness: 220, damping: 22 }}
+                        >
+                          <Image
+                            src={p.image || `https://source.unsplash.com/800x600/?house,${p.name.toLowerCase().replace(/\s+/g, ',')}`}
+                            alt={p.name}
+                            fill
+                            className="object-cover w-full h-full"
+                            priority={true}
+                          />
+                          <div className="absolute inset-0 bg-gradient-to-t from-white/30 via-transparent to-transparent" />
+                        </motion.div>
+                        <div className="absolute inset-0 pointer-events-none rounded-t-3xl shadow-[inset_0_8px_32px_0_rgba(255,255,255,0.10)]" />
                       </div>
+                      <div className="h-[2px] w-full bg-gradient-to-r from-white/20 via-transparent to-white/20 my-0" />
                       {/* Property Details */}
-                      <div className="p-6 flex-1 flex flex-col">
-                        <h3 className="text-xl font-bold text-gray-800 mb-2 group-hover:text-blue-600 transition-colors duration-300">{p.name}</h3>
-                        <p className="text-gray-600 mb-2">{p.location}</p>
-                        <div className="grid grid-cols-2 gap-4 mb-4">
-                          <div className="bg-gray-50 p-3 rounded-lg group-hover:bg-gray-100 transition-colors duration-300">
-                            <p className="text-sm text-gray-600">Value</p>
-                            <p className="font-semibold text-gray-800">${p.value.toLocaleString()}</p>
-                          </div>
-                          <div className="bg-gray-50 p-3 rounded-lg group-hover:bg-gray-100 transition-colors duration-300">
-                            <p className="text-sm text-gray-600">ROI</p>
-                            <p className="font-semibold text-gray-800">{p.roi}%</p>
-                          </div>
+                      <div className="flex-1 flex flex-col gap-5 px-8 py-7">
+                        <h3 className="text-2xl font-extrabold text-blue-900 mb-0 truncate drop-shadow-sm dark:text-blue-100">{p.name}</h3>
+                        <p className="text-slate-700 text-base font-medium truncate mb-2 dark:text-slate-300">{p.location}</p>
+                        <div className="flex gap-4 mb-4">
+                          <span className="px-5 py-2 bg-white/20 dark:bg-white/10 backdrop-blur-xl rounded-full border border-white/20 dark:border-white/10 text-blue-900 font-bold text-xs flex-1 text-center dark:text-blue-100">Value<br/><span className='text-base dark:text-blue-100'>${p.value.toLocaleString()}</span></span>
+                          <span className="px-5 py-2 bg-white/20 dark:bg-white/10 backdrop-blur-xl rounded-full border border-white/20 dark:border-white/10 text-blue-900 font-bold text-xs flex-1 text-center dark:text-blue-100">ROI<br/><span className='text-base dark:text-blue-100'>{p.roi}%</span></span>
                         </div>
                         <button
-                          className="mt-auto px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 transition"
+                          className="mt-auto px-6 py-3 bg-white/20 dark:bg-white/10 backdrop-blur-xl font-semibold shadow-lg transition rounded-full text-blue-800 hover:text-blue-900 hover:shadow-xl border border-white/20 dark:border-white/10 dark:text-blue-100"
+                          style={{ borderRadius: '9999px', fontWeight: 700, fontSize: '1rem', WebkitBackdropFilter: 'blur(16px)' }}
                           onClick={() => router.push(`/property/${p.id}`)}
                         >
                           View Details
                         </button>
                       </div>
-                    </div>
+                    </motion.div>
                   ))}
                 </div>
               </motion.div>

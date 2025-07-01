@@ -11,13 +11,16 @@ import {
   sendPasswordResetEmail
 } from 'firebase/auth';
 import { auth } from './config';
+import { usePathname, useRouter } from 'next/navigation';
 
 const AuthContext = createContext({});
 
-export const AuthContextProvider = ({ children }) => {
+export function AuthContextProvider({ children }) {
   const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  const pathname = usePathname();
+  const router = useRouter();
 
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (user) => {
@@ -36,6 +39,16 @@ export const AuthContextProvider = ({ children }) => {
 
     return () => unsubscribe();
   }, []);
+
+  // Redirect to root if not logged in and not on root or auth pages
+  useEffect(() => {
+    if (!loading && !user) {
+      const allowed = ['/', '/login', '/signup'];
+      if (!allowed.includes(pathname)) {
+        router.replace('/');
+      }
+    }
+  }, [user, loading, pathname, router]);
 
   const signInWithGoogle = async () => {
     try {
@@ -84,11 +97,18 @@ export const AuthContextProvider = ({ children }) => {
   const logout = async () => {
     try {
       setError(null);
+      await new Promise((res) => setTimeout(res, 1200));
       await signOut(auth);
     } catch (error) {
       setError(error.message);
       throw error;
     }
+  };
+
+  // After logout, always redirect to root
+  const logoutAndRedirect = async () => {
+    await logout();
+    router.replace('/');
   };
 
   return (
@@ -98,14 +118,14 @@ export const AuthContextProvider = ({ children }) => {
       signUpWithEmail,
       signInWithEmail,
       resetPassword,
-      logout, 
+      logout: logoutAndRedirect, 
       loading,
       error 
     }}>
       {!loading && children}
     </AuthContext.Provider>
   );
-};
+}
 
 export const useAuth = () => {
   return useContext(AuthContext);

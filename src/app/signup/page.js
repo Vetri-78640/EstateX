@@ -56,8 +56,8 @@ export default function Signup() {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-blue-50 via-white to-blue-50 py-12 px-4 sm:px-6 lg:px-8">
-      <div className="max-w-md w-full space-y-8 bg-white p-8 rounded-2xl shadow-xl">
+    <div className="min-h-screen flex items-center justify-center bg-white/20 backdrop-blur-md py-12 px-4 sm:px-6 lg:px-8">
+      <div className="max-w-md w-full space-y-8 bg-white/20 backdrop-blur-md border border-white/30 shadow-lg rounded-3xl p-8">
         <div>
           <h2 className="mt-2 text-center text-3xl font-extrabold text-gray-900">
             Create your account
@@ -113,7 +113,7 @@ export default function Signup() {
                   type="email"
                   autoComplete="email"
                   required
-                  className="appearance-none block w-full px-4 py-3 border border-gray-300 rounded-lg placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-colors"
+                  className="appearance-none block w-full px-4 py-3 bg-white/30 backdrop-blur border border-white/40 rounded-full placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-colors"
                   placeholder="Enter your email"
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
@@ -131,7 +131,7 @@ export default function Signup() {
                   type="password"
                   autoComplete="new-password"
                   required
-                  className="appearance-none block w-full px-4 py-3 border border-gray-300 rounded-lg placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-colors"
+                  className="appearance-none block w-full px-4 py-3 bg-white/30 backdrop-blur border border-white/40 rounded-full placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-colors"
                   placeholder="Create a password"
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
@@ -149,7 +149,7 @@ export default function Signup() {
                   type="password"
                   autoComplete="new-password"
                   required
-                  className="appearance-none block w-full px-4 py-3 border border-gray-300 rounded-lg placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-colors"
+                  className="appearance-none block w-full px-4 py-3 bg-white/30 backdrop-blur border border-white/40 rounded-full placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-colors"
                   placeholder="Confirm your password"
                   value={confirmPassword}
                   onChange={(e) => setConfirmPassword(e.target.value)}
@@ -162,7 +162,7 @@ export default function Signup() {
             <button
               type="submit"
               disabled={isLoading}
-              className="w-full flex justify-center py-3 px-4 border border-transparent rounded-lg shadow-sm text-sm font-medium text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
+              className="w-full flex justify-center py-3 px-4 btn-glass border border-blue-400 rounded-full shadow-sm text-sm font-medium text-blue-700 hover:border-blue-500 hover:text-blue-800 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 disabled:opacity-50 disabled:cursor-not-allowed transition-colors bg-white/30 backdrop-blur"
             >
               {isLoading ? (
                 <div className="flex items-center">
@@ -193,7 +193,7 @@ export default function Signup() {
             <button
               onClick={handleGoogleSignUp}
               disabled={isLoading}
-              className="w-full flex justify-center items-center py-3 px-4 border border-gray-300 rounded-lg shadow-sm text-sm font-medium text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
+              className="w-full flex justify-center items-center py-3 px-4 btn-glass border border-blue-400 rounded-full shadow-sm text-sm font-medium text-blue-700 hover:border-blue-500 hover:text-blue-800 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 disabled:opacity-50 disabled:cursor-not-allowed transition-colors bg-white/30 backdrop-blur"
             >
               <svg className="h-5 w-5 mr-2" viewBox="0 0 24 24">
                 <path

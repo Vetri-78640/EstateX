@@ -30,7 +30,7 @@ export default function Insights() {
 
   if (loading) {
     return (
-      <div className="min-h-screen bg-gradient-to-b from-white via-slate-50 to-slate-100">
+      <div className="min-h-screen bg-transparent">
         <div className="container mx-auto px-4 py-8 mt-[72px]">
           <div className="flex items-center justify-center min-h-[60vh]">
             <div className="text-center">
@@ -45,7 +45,7 @@ export default function Insights() {
 
   if (!data) {
     return (
-      <div className="min-h-screen bg-gradient-to-b from-white via-slate-50 to-slate-100">
+      <div className="min-h-screen bg-transparent">
         <div className="container mx-auto px-4 py-8 mt-[72px]">
           <div className="flex items-center justify-center min-h-[60vh]">
             <div className="text-center">
@@ -104,36 +104,54 @@ export default function Insights() {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-white via-slate-50 to-slate-100 pb-12">
+    <div className="min-h-screen bg-transparent pb-12">
       <div className="max-w-6xl mx-auto px-4 py-8 mt-[72px]">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5 }}
         >
-          <h1 className="text-4xl font-extrabold text-blue-800 mb-10 text-center drop-shadow-sm tracking-tight">Market Insights</h1>
+          <h1 className="text-4xl font-extrabold text-blue-800 mb-10 text-center drop-shadow-sm tracking-tight dark:text-white">Market Insights</h1>
 
-          {/* Summary Card */}
-          <section className="mb-12">
-            <div className="bg-white/90 rounded-3xl shadow-2xl p-8 flex flex-col md:flex-row items-center gap-10 border border-blue-100">
-              <div className="flex-1">
-                <h2 className="text-2xl font-bold text-blue-700 mb-2">U.S. Real Estate Outlook</h2>
-                <p className="text-gray-700 mb-3 leading-relaxed text-lg">{data.overallSummary.investmentStatement}</p>
-                <p className="italic text-blue-600 font-semibold text-lg">&quot;{data.overallSummary.quote}&quot;</p>
-              </div>
-              <div className="flex-1 flex flex-col items-center justify-center">
-                <div className="bg-blue-50 rounded-2xl p-8 text-center shadow-md border border-blue-100">
-                  <div className="text-5xl font-extrabold text-blue-700 mb-1">{data.overallSummary.nationalROI}%</div>
-                  <div className="text-gray-600 text-base font-medium">National Average ROI</div>
-                </div>
-              </div>
-            </div>
-          </section>
+          <section className="mb-12 px-4">
+  <div
+    className="bg-glass shadow-2xl px-8 py-12 sm:px-14 sm:py-16 max-w-6xl mx-auto border border-blue-100 dark:border-white/20 flex flex-col md:flex-row justify-center items-center gap-10 text-center dark:bg-slate-900/60"
+    style={{ borderRadius: '9999px' }}
+  >
+    {/* Text Content - Centered */}
+    <div className="flex-1 flex flex-col justify-center items-center">
+      <h2 className="text-2xl sm:text-3xl font-bold text-blue-700 mb-4 dark:text-blue-100">
+        U.S. Real Estate Outlook
+      </h2>
+      <p className="text-gray-700 mb-5 leading-relaxed text-base sm:text-lg max-w-xl dark:text-slate-300">
+        {data.overallSummary.investmentStatement}
+      </p>
+      <p className="italic text-blue-600 font-semibold text-base sm:text-lg max-w-xl dark:text-blue-200">
+        &quot;{data.overallSummary.quote}&quot;
+      </p>
+    </div>
+
+    {/* ROI Card - Centered */}
+    <div className="flex-1 flex justify-center items-center">
+      <div
+        className="bg-white/70 dark:bg-white/10 backdrop-blur-md px-10 py-8 sm:px-14 sm:py-10 shadow-lg border border-blue-100 dark:border-white/20"
+        style={{ borderRadius: '9999px' }}
+      >
+        <div className="text-4xl sm:text-5xl font-extrabold text-blue-700 mb-2 dark:text-blue-100">
+          {data.overallSummary.nationalROI}%
+        </div>
+        <div className="text-gray-600 text-sm sm:text-base font-medium dark:text-slate-300">
+          National Average ROI
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
 
           {/* ROI Bar Chart */}
           <section className="mb-14">
-            <div className="bg-white/90 rounded-3xl shadow-2xl p-8 border border-blue-100 flex flex-col items-center">
-              <h2 className="text-2xl font-bold text-blue-700 mb-6 text-center tracking-tight">Statewise ROI Comparison</h2>
+            <div className="bg-glass rounded-3xl shadow-2xl p-8 border border-blue-100 flex flex-col items-center" >
+              <h2 className="text-2xl font-bold text-blue-700 mb-6 text-center tracking-tight dark:text-blue-100">Statewise ROI Comparison</h2>
               <div className="w-full flex justify-center">
                 <div className="w-full max-w-3xl min-w-[320px] h-[340px] mx-auto">
                   <Bar data={barData} options={barOptions} />
@@ -144,33 +162,42 @@ export default function Insights() {
 
           {/* State Cards Grid */}
           <section>
-            <h2 className="text-2xl font-bold text-blue-800 mb-8 text-center tracking-tight">State Insights</h2>
+            <h2 className="text-2xl font-bold text-blue-800 mb-8 text-center tracking-tight dark:text-white">State Insights</h2>
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-10">
               {data.insights.map((state, idx) => (
                 <motion.div
                   key={state.state}
                   initial={{ opacity: 0, y: 20 }}
                   animate={{ opacity: 1, y: 0 }}
-                  transition={{ duration: 0.4, delay: idx * 0.05 }}
-                  className="bg-white/95 rounded-3xl shadow-lg hover:shadow-2xl transition-all duration-300 overflow-hidden border border-gray-100 hover:scale-[1.04] hover:-translate-y-1 p-8 flex flex-col min-h-[300px] group"
+                  transition={{ duration: 0.15, delay: idx * 0.05 }}
+                  className="bg-white/10 dark:bg-slate-900/60 backdrop-blur-md border border-white/20 dark:border-white/20 rounded-3xl shadow-xl p-8 flex flex-col min-h-[300px] group overflow-visible transform"
+                  whileHover={{ scale: 1.05 }}
+                  whileTap={{ scale: 0.98 }}
+
                 >
-                  <h3 className="text-2xl font-extrabold text-blue-700 mb-4 group-hover:text-blue-900 transition-colors tracking-tight">{state.state}</h3>
+                  <h3 className="text-2xl font-extrabold text-blue-700 mb-6 text-center dark:text-blue-100">{state.state}</h3>
+
                   <div className="flex flex-col gap-4 flex-1">
-                    <div className="bg-blue-50 rounded-xl px-4 py-3">
-                      <span className="text-gray-600 text-xs">Average ROI</span>
-                      <div className="font-bold text-blue-700 text-lg">{state.averageROI}%</div>
+                    <div className="bg-white/10 backdrop-blur-md border border-white/20 rounded-2xl px-6 py-4 text-center shadow-inner" style={{ borderRadius: '9999px' }}>
+                      <span className="text-gray-600 text-sm block mb-1 dark:text-slate-300">Average ROI</span>
+                      <div className="font-bold text-blue-700 text-xl dark:text-blue-100">{state.averageROI}%</div>
                     </div>
-                    <div className="bg-green-50 rounded-xl px-4 py-3">
-                      <span className="text-gray-600 text-xs">Market Trend</span>
-                      <div className="text-green-700 font-semibold">{state.marketTrend}</div>
+
+                    <div className="bg-white/10 backdrop-blur-md border border-white/20 rounded-2xl px-6 py-4 text-center shadow-inner" style={{ borderRadius: '9999px' }}>
+                      <span className="text-gray-600 text-sm block mb-1 dark:text-slate-300">Market Trend</span>
+                      <div className="text-green-700 font-semibold dark:text-green-300">{state.marketTrend}</div>
                     </div>
-                    <div className="bg-yellow-50 rounded-xl px-4 py-3">
-                      <span className="text-gray-600 text-xs">Investment Tip</span>
-                      <div className="text-yellow-700 font-semibold">{state.investmentTip}</div>
+
+                    <div className="bg-white/10 backdrop-blur-md border border-white/20 rounded-2xl px-6 py-4 text-center shadow-inner" style={{ borderRadius: '9999px' }}>
+                      <span className="text-gray-600 text-sm block mb-1 dark:text-slate-300">Investment Tip</span>
+                      <div className="text-yellow-700 font-semibold dark:text-blue-300">{state.investmentTip}</div>
                     </div>
                   </div>
+
                   <div className="mt-6 pt-4 border-t border-slate-100">
-                    <span className="italic text-blue-600 group-hover:text-blue-800 transition-colors text-base block text-center">&quot;{state.quote}&quot;</span>
+                    <span className="italic text-blue-600 group-hover:text-blue-800 transition-colors text-base block text-center dark:text-blue-200">
+                      &quot;{state.quote}&quot;
+                    </span>
                   </div>
                 </motion.div>
               ))}
