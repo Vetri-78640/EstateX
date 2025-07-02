@@ -48,6 +48,37 @@ export default function RootLayout({ children }) {
             <Footer />
           </AuthContextProvider>
         </ThemeProvider>
+        <div
+        style={{
+          textAlign: 'center',
+          padding: '1.5rem 0',
+          backdropFilter: 'blur(8px)',
+          color: '#333',
+          fontWeight: '500',
+          fontSize: '1rem',
+          borderTop: '1px solid rgba(0,0,0,0.05)',
+        }}
+      >
+        <h1 style={{ marginBottom: '0.5rem'}} className='text-black dark:text-white'>Designed & Developed by Vetri</h1>
+        <div style={{ display: 'flex', justifyContent: 'center', gap: '1.5rem', fontSize: '1.4rem' }}>
+          <a
+            href="https://www.linkedin.com/in/vetriselvan-r-a238b7263"
+            target="_blank"
+            rel="noopener noreferrer"
+            style={{ color: '#0077b5', textDecoration: 'none' }}
+          >
+            LinkedIn
+          </a>
+          <a
+            href="https://www.instagram.com/im.vetri"
+            target="_blank"
+            rel="noopener noreferrer"
+            style={{ color:'rgb(247, 88, 88)', textDecoration: 'none' }}
+          >
+            Instagram
+          </a>
+        </div>
+      </div>
       </body>
     </html>
   )

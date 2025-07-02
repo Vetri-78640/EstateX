@@ -34,9 +34,9 @@ export default function CursorGlow() {
           width: 200,
           height: 200,
           borderRadius: '50%',
-          background: 'radial-gradient(circle, #fff 0%, #fff8 40%, #2226 100%)',
-          filter: 'blur(32px)',
-          opacity: 0.38,
+          background: 'radial-gradient(circle, #fff 0%, #fff8 40%, #2226 10%)',
+          filter: 'blur(18px)',
+          opacity: 0.18,
           pointerEvents: 'none',
           transition: 'background 0.18s, filter 0.18s, opacity 0.18s',
         }}
