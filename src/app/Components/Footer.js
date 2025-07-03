@@ -32,8 +32,8 @@ export default function Footer() {
     <footer  style={{ borderRadius: '9999px' }} className="mt-20 mb-10 bg-white/20 backdrop-blur-md border border-white/30 text-slate-800 px-4 sm:px-10 py-8 shadow-lg w-[80%] max-w-[1600px] mx-auto rounded-3xl flex flex-col items-center justify-between relative dark:bg-slate-900/60 dark:text-slate-100 dark:border-white/20">
       <div className="w-full flex flex-col md:flex-row gap-6 text-sm md:text-base items-center justify-center gap-x-8">
         <div className="space-y-0.5 w-full md:w-auto text-center md:text-left"> {/* Footer Summary*/}
-          <h2 className="text-lg font-semibold tracking-wide text-slate-900 dark:text-white">Real Estate Tracker</h2>
-          <p className="text-slate-700 dark:text-slate-300">Track investments, analyze trends, rental income, and grow your portfolio.</p>
+          <h2 className="text-lg max-[425px]:text-[1rem] px-10 sm:px-6 font-semibold tracking-wide text-slate-900 dark:text-white">Real Estate Tracker</h2>
+          <p className="text-slate-700 max-[425px]:text-[0.7rem] px-10 sm:px-6 dark:text-slate-300">Track investments, analyze trends, rental income, and grow your portfolio.</p>
         </div>
 
         <div className="space-y-0.5 w-full md:w-auto text-center md:text-left"> {/*Stay updated with our newsletter(subscribe) */}
@@ -58,7 +58,7 @@ export default function Footer() {
         </div>
       </div>
 
-      <div className="text-center py-4 text-slate-600 dark:text-slate-300 text-sm border-t border-white/60 dark:border-white/20 mt-6 bg-transparent rounded-full shadow-lg border-b-2 border-white/30 dark:border-b-2 dark:border-white/20 backdrop-blur-md w-[60%] max-w-md mx-auto">
+      <div className="text-center py-4 max-[425px]:text-[0.6rem] px-4 sm:px-6 text-slate-600 dark:text-slate-300 text-sm border-t border-white/60 dark:border-white/20 mt-6 bg-transparent rounded-full shadow-lg border-b-2 border-white/30 dark:border-b-2 dark:border-white/20 backdrop-blur-md w-[60%] max-w-md mx-auto">
         &copy; {new Date().getFullYear()} Real Estate Tracker. All Rights Reserved.
       </div>
 
