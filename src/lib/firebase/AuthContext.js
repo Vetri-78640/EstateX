@@ -23,6 +23,12 @@ export function AuthContextProvider({ children }) {
   const router = useRouter();
 
   useEffect(() => {
+    if (!auth) {
+      console.warn('Firebase auth not available');
+      setLoading(false);
+      return;
+    }
+
     const unsubscribe = onAuthStateChanged(auth, (user) => {
       if (user) {
         setUser({
@@ -51,6 +57,9 @@ export function AuthContextProvider({ children }) {
   }, [user, loading, pathname, router]);
 
   const signInWithGoogle = async () => {
+    if (!auth) {
+      throw new Error('Firebase auth not available');
+    }
     try {
       setError(null);
       const provider = new GoogleAuthProvider();
@@ -63,6 +72,9 @@ export function AuthContextProvider({ children }) {
   };
 
   const signUpWithEmail = async (email, password) => {
+    if (!auth) {
+      throw new Error('Firebase auth not available');
+    }
     try {
       setError(null);
       const result = await createUserWithEmailAndPassword(auth, email, password);
@@ -74,6 +86,9 @@ export function AuthContextProvider({ children }) {
   };
 
   const signInWithEmail = async (email, password) => {
+    if (!auth) {
+      throw new Error('Firebase auth not available');
+    }
     try {
       setError(null);
       const result = await signInWithEmailAndPassword(auth, email, password);
@@ -85,6 +100,9 @@ export function AuthContextProvider({ children }) {
   };
 
   const resetPassword = async (email) => {
+    if (!auth) {
+      throw new Error('Firebase auth not available');
+    }
     try {
       setError(null);
       await sendPasswordResetEmail(auth, email);
@@ -95,6 +113,9 @@ export function AuthContextProvider({ children }) {
   };
 
   const logout = async () => {
+    if (!auth) {
+      throw new Error('Firebase auth not available');
+    }
     try {
       setError(null);
       await new Promise((res) => setTimeout(res, 1200));

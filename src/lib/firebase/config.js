@@ -13,8 +13,27 @@ const firebaseConfig = {
   measurementId: process.env.NEXT_PUBLIC_FIREBASE_MEASUREMENT_ID
 };
 
-// Initialize Firebase
-const app = initializeApp(firebaseConfig);
-export const auth = getAuth(app);
+// Check if we're in the browser and have valid config
+const isClient = typeof window !== 'undefined';
+const hasValidConfig = firebaseConfig.apiKey && firebaseConfig.projectId;
 
+let app = null;
+let auth = null;
+
+if (isClient && hasValidConfig) {
+  try {
+    // Initialize Firebase
+    app = initializeApp(firebaseConfig);
+    auth = getAuth(app);
+  } catch (error) {
+    console.error('Firebase initialization error:', error);
+  }
+} else if (!isClient) {
+  // Server-side: return null to prevent SSR issues
+  console.warn('Firebase not initialized on server-side');
+} else {
+  console.error('Firebase configuration is missing required environment variables');
+}
+
+export { auth };
 export default app; 
