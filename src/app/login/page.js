@@ -20,7 +20,11 @@ export default function Login() {
   const handleGoogleSignIn = async () => {
     setIsLoading(true);
     try {
+      console.log('Login: Starting Google sign-in...');
       await signInWithGoogle();
+      console.log('Login: Google sign-in successful');
+    } catch (error) {
+      console.error('Login: Google sign-in error:', error);
     } finally {
       setIsLoading(false);
     }
@@ -30,7 +34,11 @@ export default function Login() {
     e.preventDefault();
     setIsLoading(true);
     try {
+      console.log('Login: Starting email sign-in...', { email });
       await signInWithEmail(email, password);
+      console.log('Login: Email sign-in successful');
+    } catch (error) {
+      console.error('Login: Email sign-in error:', error);
     } finally {
       setIsLoading(false);
     }

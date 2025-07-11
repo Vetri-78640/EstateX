@@ -21,9 +21,11 @@ export default function Signup() {
   const handleGoogleSignUp = async () => {
     try {
       setIsLoading(true);
+      console.log('Signup: Starting Google sign-up...');
       await signInWithGoogle();
+      console.log('Signup: Google sign-up successful');
     } catch (err) {
-      console.error('Google signup error:', err);
+      console.error('Signup: Google sign-up error:', err);
     } finally {
       setIsLoading(false);
     }
@@ -38,9 +40,11 @@ export default function Signup() {
 
     try {
       setIsLoading(true);
+      console.log('Signup: Starting email sign-up...', { email });
       await signUpWithEmail(email, password);
+      console.log('Signup: Email sign-up successful');
     } catch (err) {
-      console.error('Email signup error:', err);
+      console.error('Signup: Email sign-up error:', err);
     } finally {
       setIsLoading(false);
     }

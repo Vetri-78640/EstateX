@@ -23,6 +23,13 @@ export function AuthContextProvider({ children }) {
   const router = useRouter();
 
   useEffect(() => {
+    console.log('AuthContext: Firebase auth available?', !!auth);
+    console.log('AuthContext: Environment variables check:', {
+      apiKey: !!process.env.NEXT_PUBLIC_FIREBASE_API_KEY,
+      projectId: !!process.env.NEXT_PUBLIC_FIREBASE_PROJECT_ID,
+      authDomain: !!process.env.NEXT_PUBLIC_FIREBASE_AUTH_DOMAIN
+    });
+    
     if (!auth) {
       console.warn('Firebase auth not available');
       setLoading(false);
@@ -30,6 +37,7 @@ export function AuthContextProvider({ children }) {
     }
 
     const unsubscribe = onAuthStateChanged(auth, (user) => {
+      console.log('AuthContext: Auth state changed:', !!user);
       if (user) {
         setUser({
           uid: user.uid,
