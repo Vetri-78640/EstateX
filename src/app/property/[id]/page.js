@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import { useRouter, useParams } from "next/navigation";
 import PerformanceGraph from "../../Components/PerformanceGraph";
 import Image from 'next/image';
+import { secureStorage } from '@/lib/encryption';
 
 export default function PropertyDetails() {
   const router = useRouter();
@@ -55,10 +56,9 @@ export default function PropertyDetails() {
         setProperty(found);
         setLoading(false);
         // Check if bought
-        const stored = localStorage.getItem("myProperties");
+        const stored = secureStorage.getItem("myProperties");
         if (stored) {
-          const arr = JSON.parse(stored);
-          const match = arr.find((p) => String(p.id) === String(id));
+          const match = stored.find((p) => String(p.id) === String(id));
           if (match) {
             setIsBought(true);
             setIsRented(!!match.isRented);
@@ -71,10 +71,9 @@ export default function PropertyDetails() {
   const handleBuy = async () => {
     setActionLoading((prev) => ({ ...prev, buy: true }));
     await new Promise((res) => setTimeout(res, 1400)); // 1.4s delay
-    const stored = localStorage.getItem("myProperties");
-    let arr = stored ? JSON.parse(stored) : [];
-    arr.push({ ...property, isRented: false, occupied: false });
-    localStorage.setItem("myProperties", JSON.stringify(arr));
+    const stored = secureStorage.getItem("myProperties") || [];
+    stored.push({ ...property, isRented: false, occupied: false });
+    secureStorage.setItem("myProperties", stored);
     setIsBought(true);
     setActionLoading((prev) => ({ ...prev, buy: false }));
   };
@@ -82,10 +81,9 @@ export default function PropertyDetails() {
   const handleSell = async () => {
     setActionLoading((prev) => ({ ...prev, sell: true }));
     await new Promise((res) => setTimeout(res, 1500)); // 1.5s delay
-    const stored = localStorage.getItem("myProperties");
-    let arr = stored ? JSON.parse(stored) : [];
-    arr = arr.filter((p) => String(p.id) !== String(id));
-    localStorage.setItem("myProperties", JSON.stringify(arr));
+    const stored = secureStorage.getItem("myProperties") || [];
+    const updated = stored.filter((p) => String(p.id) !== String(id));
+    secureStorage.setItem("myProperties", updated);
     setIsBought(false);
     setIsRented(false);
     setOccupied(false);
@@ -96,14 +94,13 @@ export default function PropertyDetails() {
   const handleToggleRent = async () => {
     setActionLoading((prev) => ({ ...prev, rent: true }));
     await new Promise((res) => setTimeout(res, 1200)); // 1.2s delay
-    const stored = localStorage.getItem("myProperties");
-    let arr = stored ? JSON.parse(stored) : [];
-    arr = arr.map((p) =>
+    const stored = secureStorage.getItem("myProperties") || [];
+    const updated = stored.map((p) =>
       String(p.id) === String(id)
         ? { ...p, isRented: !isRented, occupied: !isRented }
         : p
     );
-    localStorage.setItem("myProperties", JSON.stringify(arr));
+    secureStorage.setItem("myProperties", updated);
     setIsRented((prev) => !prev);
     setOccupied((prev) => !prev);
     setActionLoading((prev) => ({ ...prev, rent: false }));

@@ -2,8 +2,8 @@ import './globals.css'
 import Navbar from './Components/Navbar'
 import Footer from './Components/Footer'
 import { AuthContextProvider } from '@/lib/firebase/AuthContext'
-import CursorGlow from './Components/CursorGlow'
 import { ThemeProvider } from './Components/ThemeProvider'
+import { Analytics } from "@vercel/analytics/next"
 
 export const metadata = {
   title: 'Real Estate Tracker',
@@ -15,8 +15,6 @@ export default function RootLayout({ children }) {
     <html lang="en">
       <body className="flex flex-col min-h-screen">
         <ThemeProvider>
-          <CursorGlow />
-
           {/* Background Effects */}
           <div className="fixed inset-0 -z-10 pointer-events-none">
             <div className="absolute inset-0 w-full h-full bg-gradient-to-br from-blue-200 via-pink-100 to-yellow-100 animate-gradient-move dark:from-gray-900 dark:via-slate-900 dark:to-gray-800" />
@@ -79,6 +77,7 @@ export default function RootLayout({ children }) {
           </a>
         </div>
       </div>
+        <Analytics/>
       </body>
     </html>
   )

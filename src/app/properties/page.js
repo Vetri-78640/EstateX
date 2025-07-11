@@ -6,6 +6,7 @@ import { motion } from 'framer-motion';
 import SearchBar from '../Components/SearchBar';
 import FilterSidebar from '../Components/FilterSidebar';
 import Image from 'next/image';
+import { secureStorage } from '@/lib/encryption';
 
 export default function Properties() {
   const [data, setData] = useState(null);
@@ -28,9 +29,9 @@ export default function Properties() {
         console.error('Failed to fetch data', err);
         setLoading(false);
       });
-    // Load bought properties from localStorage
-    const stored = localStorage.getItem("myProperties");
-    setMyProperties(stored ? JSON.parse(stored) : []);
+    // Load bought properties from encrypted localStorage
+    const stored = secureStorage.getItem("myProperties");
+    setMyProperties(stored || []);
   }, []);
 
   // Only render after mounted and data loaded

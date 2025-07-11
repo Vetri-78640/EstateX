@@ -4,6 +4,7 @@ import { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { motion } from 'framer-motion';
 import Image from 'next/image';
+import { secureStorage } from '@/lib/encryption';
 
 const Dashboard = () => {
   const [myProperties, setMyProperties] = useState([]);
@@ -45,9 +46,9 @@ const Dashboard = () => {
 
   useEffect(() => {
     setMounted(true);
-    // Load bought properties from localStorage
-    const stored = localStorage.getItem("myProperties");
-    setMyProperties(stored ? JSON.parse(stored) : []);
+    // Load bought properties from encrypted localStorage
+    const stored = secureStorage.getItem("myProperties");
+    setMyProperties(stored || []);
     setLoading(false);
   }, []);
 
@@ -57,7 +58,7 @@ const Dashboard = () => {
     await new Promise((res) => setTimeout(res, 1200)); // 1.2s delay for realism
     const updated = myProperties.filter((p) => p.id !== id);
     setMyProperties(updated);
-    localStorage.setItem("myProperties", JSON.stringify(updated));
+    secureStorage.setItem("myProperties", updated);
     setFadingOut((prev) => {
       const copy = { ...prev };
       delete copy[id];
@@ -86,7 +87,7 @@ const Dashboard = () => {
     return (
       <div className="min-h-screen bg-transparent flex items-center justify-center" >
         <div className="max-w-md mx-auto bg-white/20 backdrop-blur-md border border-white/30 shadow-lg rounded-3xl p-8 flex flex-col items-center" style={{ borderRadius: '9999px' }}>
-          <p className="text-xl font-semibold text-blue-700 mb-4 text-center">&quot;In real estate, you make your money when you buy, not when you sell.&quot;</p>
+          <p className="text-xl font-semibold text-black-700 mb-4 text-center">&quot;In real estate, you make your money when you buy, not when you sell.&quot;</p>
           <button
             className="mt-2 px-6 py-3 btn-glass border border-blue-400 rounded-full font-semibold shadow hover:border-blue-500 hover:text-blue-800 bg-white/30 backdrop-blur text-blue-700 transition"
             style={{ borderRadius: '9999px' }}

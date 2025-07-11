@@ -1,6 +1,7 @@
 "use client";
 
 import { createContext, useContext, useEffect, useState } from 'react';
+import { secureStorage } from '@/lib/encryption';
 
 const ThemeContext = createContext();
 
@@ -9,7 +10,7 @@ export function ThemeProvider({ children }) {
 
   useEffect(() => {
     if (typeof window !== 'undefined') {
-      const stored = localStorage.getItem('theme');
+      const stored = secureStorage.getItem('theme');
       if (stored) {
         setTheme(stored);
         document.documentElement.classList.toggle('dark', stored === 'dark');
@@ -23,7 +24,7 @@ export function ThemeProvider({ children }) {
   useEffect(() => {
     if (typeof window !== 'undefined') {
       document.documentElement.classList.toggle('dark', theme === 'dark');
-      localStorage.setItem('theme', theme);
+      secureStorage.setItem('theme', theme);
     }
   }, [theme]);
 
