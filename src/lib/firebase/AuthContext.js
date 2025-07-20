@@ -65,43 +65,74 @@ export function AuthContextProvider({ children }) {
   }, [user, loading, pathname, router]);
 
   const signInWithGoogle = async () => {
+    console.log('🔍 signInWithGoogle called');
+    console.log('🔍 Auth object available:', !!auth);
+    
     if (!auth) {
+      console.error('❌ Firebase auth not available');
       throw new Error('Firebase auth not available');
     }
+    
     try {
       setError(null);
+      console.log('🔍 Creating Google provider...');
       const provider = new GoogleAuthProvider();
+      console.log('🔍 Calling signInWithPopup...');
       const result = await signInWithPopup(auth, provider);
+      console.log('✅ Google sign-in successful:', result.user.email);
       return result.user;
     } catch (error) {
+      console.error('❌ Google sign-in error:', error);
+      console.error('❌ Error code:', error.code);
+      console.error('❌ Error message:', error.message);
       setError(error.message);
       throw error;
     }
   };
 
   const signUpWithEmail = async (email, password) => {
+    console.log('🔍 signUpWithEmail called');
+    console.log('🔍 Auth object available:', !!auth);
+    
     if (!auth) {
+      console.error('❌ Firebase auth not available');
       throw new Error('Firebase auth not available');
     }
+    
     try {
       setError(null);
+      console.log('🔍 Calling createUserWithEmailAndPassword...');
       const result = await createUserWithEmailAndPassword(auth, email, password);
+      console.log('✅ Email sign-up successful:', result.user.email);
       return result.user;
     } catch (error) {
+      console.error('❌ Email sign-up error:', error);
+      console.error('❌ Error code:', error.code);
+      console.error('❌ Error message:', error.message);
       setError(error.message);
       throw error;
     }
   };
 
   const signInWithEmail = async (email, password) => {
+    console.log('🔍 signInWithEmail called');
+    console.log('🔍 Auth object available:', !!auth);
+    
     if (!auth) {
+      console.error('❌ Firebase auth not available');
       throw new Error('Firebase auth not available');
     }
+    
     try {
       setError(null);
+      console.log('🔍 Calling signInWithEmailAndPassword...');
       const result = await signInWithEmailAndPassword(auth, email, password);
+      console.log('✅ Email sign-in successful:', result.user.email);
       return result.user;
     } catch (error) {
+      console.error('❌ Email sign-in error:', error);
+      console.error('❌ Error code:', error.code);
+      console.error('❌ Error message:', error.message);
       setError(error.message);
       throw error;
     }
