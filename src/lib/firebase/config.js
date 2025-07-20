@@ -4,13 +4,13 @@ import { getAuth } from 'firebase/auth';
 // Your web app's Firebase configuration
 // Using environment variables for security
 const firebaseConfig = {
-  apiKey: process.env.NEXT_PUBLIC_FIREBASE_API_KEY || 'AIzaSyCZpltVDLgquCaLZ2lsgEVOwYmkdNQktR4',
-  authDomain: process.env.NEXT_PUBLIC_FIREBASE_AUTH_DOMAIN || 'estatex-c39d5.firebaseapp.com',
-  projectId: process.env.NEXT_PUBLIC_FIREBASE_PROJECT_ID || 'estatex-c39d5',
-  storageBucket: process.env.NEXT_PUBLIC_FIREBASE_STORAGE_BUCKET || 'estatex-c39d5.firebasestorage.app',
-  messagingSenderId: process.env.NEXT_PUBLIC_FIREBASE_MESSAGING_SENDER_ID || '207202007080',
-  appId: process.env.NEXT_PUBLIC_FIREBASE_APP_ID || '1:207202007080:web:fc6c8b0ae93ad79b99dd1d',
-  measurementId: process.env.NEXT_PUBLIC_FIREBASE_MEASUREMENT_ID || 'G-PBRGS54WD3'
+  apiKey: process.env.NEXT_PUBLIC_FIREBASE_API_KEY,
+  authDomain: process.env.NEXT_PUBLIC_FIREBASE_AUTH_DOMAIN,
+  projectId: process.env.NEXT_PUBLIC_FIREBASE_PROJECT_ID,
+  storageBucket: process.env.NEXT_PUBLIC_FIREBASE_STORAGE_BUCKET,
+  messagingSenderId: process.env.NEXT_PUBLIC_FIREBASE_MESSAGING_SENDER_ID,
+  appId: process.env.NEXT_PUBLIC_FIREBASE_APP_ID,
+  measurementId: process.env.NEXT_PUBLIC_FIREBASE_MEASUREMENT_ID
 };
 
 // Debug logging
@@ -53,6 +53,12 @@ if (isClient && hasValidConfig) {
     projectId: !firebaseConfig.projectId,
     authDomain: !firebaseConfig.authDomain
   });
+  
+  // Show user-friendly error
+  if (typeof window !== 'undefined') {
+    console.error('🔧 To fix this: Add environment variables to Vercel dashboard');
+    console.error('🔧 Go to: Vercel Dashboard → Your Project → Settings → Environment Variables');
+  }
 }
 
 export { auth };
