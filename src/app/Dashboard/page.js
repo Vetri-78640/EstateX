@@ -5,6 +5,7 @@ import { useRouter } from 'next/navigation';
 import { motion } from 'framer-motion';
 import Image from 'next/image';
 import { secureStorage } from '@/lib/encryption';
+import { useAuth } from '@/lib/firebase/AuthContext';
 
 const Dashboard = () => {
   const [myProperties, setMyProperties] = useState([]);
@@ -12,6 +13,7 @@ const Dashboard = () => {
   const [mounted, setMounted] = useState(false);
   const [fadingOut, setFadingOut] = useState({});
   const router = useRouter();
+  const { user } = useAuth();
 
   // Map of city/location to random lat/lng
   const locationToLatLng = {
@@ -46,11 +48,20 @@ const Dashboard = () => {
 
   useEffect(() => {
     setMounted(true);
-    // Load bought properties from encrypted localStorage
-    const stored = secureStorage.getItem("myProperties");
-    setMyProperties(stored || []);
+    // Load bought properties from encrypted localStorage for specific user
+    const userId = user?.uid;
+    console.log('Dashboard: Loading data for user:', userId);
+    
+    if (userId) {
+      const stored = secureStorage.getItem("myProperties", userId);
+      console.log('Dashboard: Loaded properties for user:', userId, 'Count:', stored?.length || 0);
+      setMyProperties(stored || []);
+    } else {
+      console.log('Dashboard: No user ID, setting empty properties');
+      setMyProperties([]);
+    }
     setLoading(false);
-  }, []);
+  }, [user]);
 
   // Remove (sell) property
   const handleSell = async (id) => {
@@ -58,7 +69,7 @@ const Dashboard = () => {
     await new Promise((res) => setTimeout(res, 1200)); // 1.2s delay for realism
     const updated = myProperties.filter((p) => p.id !== id);
     setMyProperties(updated);
-    secureStorage.setItem("myProperties", updated);
+    secureStorage.setItem("myProperties", updated, user?.uid);
     setFadingOut((prev) => {
       const copy = { ...prev };
       delete copy[id];
@@ -83,17 +94,47 @@ const Dashboard = () => {
     );
   }
 
+  if (!user) {
+    return (
+      <div className="min-h-screen bg-transparent flex items-center justify-center">
+        <div className="max-w-md mx-auto bg-white/20 backdrop-blur-md border border-white/30 shadow-lg rounded-3xl p-8 flex flex-col items-center" style={{ borderRadius: '9999px' }}>
+          <p className="text-xl font-semibold text-black-700 mb-4 text-center">Please log in to view your dashboard</p>
+          <button
+            className="mt-2 px-6 py-3 btn-glass border border-blue-400 rounded-full font-semibold shadow hover:border-blue-500 hover:text-blue-800 bg-white/30 backdrop-blur text-blue-700 transition"
+            style={{ borderRadius: '9999px' }}
+            onClick={() => router.push("/login")}
+          >
+            Login
+          </button>
+        </div>
+      </div>
+    );
+  }
+
+  // Debug section (remove this in production)
+  const debugStorage = () => {
+    const { debugStorage } = require('@/lib/encryption');
+    debugStorage();
+  };
+
   if (!myProperties || myProperties.length === 0) {
     return (
       <div className="min-h-screen bg-transparent flex items-center justify-center" >
         <div className="max-w-md mx-auto bg-white/20 backdrop-blur-md border border-white/30 shadow-lg rounded-3xl p-8 flex flex-col items-center" style={{ borderRadius: '9999px' }}>
           <p className="text-xl font-semibold text-black-700 mb-4 text-center">&quot;In real estate, you make your money when you buy, not when you sell.&quot;</p>
+          <p className="text-sm text-gray-600 mb-4 text-center">User ID: {user?.uid}</p>
           <button
             className="mt-2 px-6 py-3 btn-glass border border-blue-400 rounded-full font-semibold shadow hover:border-blue-500 hover:text-blue-800 bg-white/30 backdrop-blur text-blue-700 transition"
             style={{ borderRadius: '9999px' }}
             onClick={() => router.push("/properties")}
           >
             Buy Properties
+          </button>
+          <button
+            className="mt-2 px-4 py-2 text-xs border border-gray-400 rounded-full text-gray-600 hover:bg-gray-100 transition"
+            onClick={debugStorage}
+          >
+            Debug Storage
           </button>
         </div>
       </div>

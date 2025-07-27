@@ -158,6 +158,10 @@ export function AuthContextProvider({ children }) {
     try {
       setError(null);
       await new Promise((res) => setTimeout(res, 1200));
+      
+      // Don't clear user data - preserve it for when they log back in
+      console.log('User logged out, data preserved for:', user?.uid);
+      
       await signOut(auth);
     } catch (error) {
       setError(error.message);

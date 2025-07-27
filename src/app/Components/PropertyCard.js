@@ -56,7 +56,6 @@ export default function PropertyCardsGrid({ properties }) {
                 <p className="font-semibold text-gray-900">{p.roi}%</p>
               </div>
             </div>
-
             {/* Button */}
             <button className="w-full px-6 py-3 rounded-full bg-white/10 border border-white/20 text-white font-semibold backdrop-blur-md shadow hover:bg-white/20 transition">
               View Details

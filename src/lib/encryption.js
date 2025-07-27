@@ -80,25 +80,78 @@ const migrateExistingData = (key) => {
   }
 };
 
-// Secure localStorage wrapper
+// Migration function to handle existing shared data
+const migrateSharedDataToUserSpecific = (userId) => {
+  try {
+    // Check if there's old shared data
+    const oldSharedData = localStorage.getItem("myProperties");
+    if (oldSharedData) {
+      console.log('Found old shared data, migrating to user-specific storage...');
+      
+      // Try to decrypt/parse the old data
+      let parsedData = null;
+      try {
+        parsedData = decryptData(oldSharedData);
+      } catch (error) {
+        try {
+          parsedData = JSON.parse(oldSharedData);
+        } catch (parseError) {
+          console.warn('Could not parse old shared data');
+          return;
+        }
+      }
+      
+      if (parsedData && Array.isArray(parsedData)) {
+        // Save the old data to the current user's storage
+        secureStorage.setItem("myProperties", parsedData, userId);
+        console.log(`Migrated ${parsedData.length} properties to user ${userId}`);
+        
+        // Remove the old shared data
+        localStorage.removeItem("myProperties");
+        console.log('Removed old shared data');
+      }
+    }
+  } catch (error) {
+    console.error('Migration error:', error);
+  }
+};
+
+// User-specific storage key generator
+const getUserStorageKey = (baseKey, userId) => {
+  if (!userId) {
+    console.warn('No user ID provided, using fallback key');
+    return baseKey;
+  }
+  return `${baseKey}_user_${userId}`;
+};
+
+// Secure localStorage wrapper with user isolation
 export const secureStorage = {
-  setItem: (key, value) => {
+  setItem: (key, value, userId = null) => {
     try {
+      const userKey = getUserStorageKey(key, userId);
       const encrypted = encryptData(value);
       if (encrypted) {
-        localStorage.setItem(key, encrypted);
+        localStorage.setItem(userKey, encrypted);
       }
     } catch (error) {
       console.error('Secure storage set error:', error);
     }
   },
 
-  getItem: (key) => {
+  getItem: (key, userId = null) => {
     try {
-      // Migrate existing data if needed
-      migrateExistingData(key);
+      const userKey = getUserStorageKey(key, userId);
       
-      const encrypted = localStorage.getItem(key);
+      // If this is a logged-in user, check for migration
+      if (userId) {
+        migrateSharedDataToUserSpecific(userId);
+      }
+      
+      // Migrate existing data if needed
+      migrateExistingData(userKey);
+      
+      const encrypted = localStorage.getItem(userKey);
       const result = encrypted ? decryptData(encrypted) : null;
       return result;
     } catch (error) {
@@ -107,19 +160,89 @@ export const secureStorage = {
     }
   },
 
-  removeItem: (key) => {
+  removeItem: (key, userId = null) => {
     try {
-      localStorage.removeItem(key);
+      const userKey = getUserStorageKey(key, userId);
+      localStorage.removeItem(userKey);
     } catch (error) {
       console.error('Secure storage remove error:', error);
     }
   },
 
-  clear: () => {
+  clear: (userId = null) => {
     try {
-      localStorage.clear();
+      if (userId) {
+        // Clear only user-specific data
+        const keys = Object.keys(localStorage);
+        keys.forEach(key => {
+          if (key.includes(`_user_${userId}`)) {
+            localStorage.removeItem(key);
+          }
+        });
+      } else {
+        // Clear all data (fallback)
+        localStorage.clear();
+      }
     } catch (error) {
       console.error('Secure storage clear error:', error);
+    }
+  },
+
+  // Get all keys for a specific user
+  getUserKeys: (userId) => {
+    try {
+      const keys = Object.keys(localStorage);
+      return keys.filter(key => key.includes(`_user_${userId}`));
+    } catch (error) {
+      console.error('Secure storage getUserKeys error:', error);
+      return [];
+    }
+  },
+
+  // Get all user IDs that have data
+  getAllUserIds: () => {
+    try {
+      const keys = Object.keys(localStorage);
+      const userIds = new Set();
+      
+      keys.forEach(key => {
+        const match = key.match(/_user_([^_]+)$/);
+        if (match) {
+          userIds.add(match[1]);
+        }
+      });
+      
+      return Array.from(userIds);
+    } catch (error) {
+      console.error('Secure storage getAllUserIds error:', error);
+      return [];
+    }
+  },
+
+  // Debug function to show all storage data
+  debugStorage: () => {
+    try {
+      const allKeys = Object.keys(localStorage);
+      const userData = {};
+      
+      allKeys.forEach(key => {
+        if (key.includes('myProperties')) {
+          const match = key.match(/_user_([^_]+)$/);
+          const userId = match ? match[1] : 'shared';
+          userData[userId] = key;
+        }
+      });
+      
+      console.log('Storage Debug:', {
+        allKeys: allKeys.filter(k => k.includes('myProperties')),
+        userData,
+        totalKeys: allKeys.length
+      });
+      
+      return userData;
+    } catch (error) {
+      console.error('Debug storage error:', error);
+      return {};
     }
   }
 }; 

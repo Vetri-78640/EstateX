@@ -1,7 +1,6 @@
 "use client";
 
 export default function FilterSidebar({ filters, onChange }) {
-  // Set reasonable price range defaults
   const minPossible = 0;
   const maxPossible = 2000000;
   const min = Number(filters.minPrice) || minPossible;

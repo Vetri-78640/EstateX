@@ -5,6 +5,7 @@ import { useRouter, useParams } from "next/navigation";
 import PerformanceGraph from "../../Components/PerformanceGraph";
 import Image from 'next/image';
 import { secureStorage } from '@/lib/encryption';
+import { useAuth } from '@/lib/firebase/AuthContext';
 
 export default function PropertyDetails() {
   const router = useRouter();
@@ -16,6 +17,7 @@ export default function PropertyDetails() {
   const [isRented, setIsRented] = useState(false);
   const [occupied, setOccupied] = useState(false);
   const [actionLoading, setActionLoading] = useState({ buy: false, sell: false, rent: false });
+  const { user } = useAuth();
 
   // Map of city/location to random lat/lng
   const locationToLatLng = {
@@ -55,25 +57,34 @@ export default function PropertyDetails() {
         const found = json.properties.find((p) => String(p.id) === String(id));
         setProperty(found);
         setLoading(false);
-        // Check if bought
-        const stored = secureStorage.getItem("myProperties");
-        if (stored) {
-          const match = stored.find((p) => String(p.id) === String(id));
-          if (match) {
-            setIsBought(true);
-            setIsRented(!!match.isRented);
-            setOccupied(!!match.occupied);
+        // Check if bought for specific user
+        const userId = user?.uid;
+        if (userId) {
+          const stored = secureStorage.getItem("myProperties", userId);
+          if (stored) {
+            const match = stored.find((p) => String(p.id) === String(id));
+            if (match) {
+              setIsBought(true);
+              setIsRented(!!match.isRented);
+              setOccupied(!!match.occupied);
+            }
           }
         }
       });
-  }, [id]);
+  }, [id, user]);
 
   const handleBuy = async () => {
+    if (!user) {
+      alert('Please log in to buy properties');
+      router.push('/login');
+      return;
+    }
+    
     setActionLoading((prev) => ({ ...prev, buy: true }));
     await new Promise((res) => setTimeout(res, 1400)); // 1.4s delay
-    const stored = secureStorage.getItem("myProperties") || [];
+    const stored = secureStorage.getItem("myProperties", user.uid) || [];
     stored.push({ ...property, isRented: false, occupied: false });
-    secureStorage.setItem("myProperties", stored);
+    secureStorage.setItem("myProperties", stored, user.uid);
     setIsBought(true);
     setActionLoading((prev) => ({ ...prev, buy: false }));
   };
@@ -81,9 +92,9 @@ export default function PropertyDetails() {
   const handleSell = async () => {
     setActionLoading((prev) => ({ ...prev, sell: true }));
     await new Promise((res) => setTimeout(res, 1500)); // 1.5s delay
-    const stored = secureStorage.getItem("myProperties") || [];
+    const stored = secureStorage.getItem("myProperties", user.uid) || [];
     const updated = stored.filter((p) => String(p.id) !== String(id));
-    secureStorage.setItem("myProperties", updated);
+    secureStorage.setItem("myProperties", updated, user.uid);
     setIsBought(false);
     setIsRented(false);
     setOccupied(false);
@@ -94,13 +105,13 @@ export default function PropertyDetails() {
   const handleToggleRent = async () => {
     setActionLoading((prev) => ({ ...prev, rent: true }));
     await new Promise((res) => setTimeout(res, 1200)); // 1.2s delay
-    const stored = secureStorage.getItem("myProperties") || [];
+    const stored = secureStorage.getItem("myProperties", user.uid) || [];
     const updated = stored.map((p) =>
       String(p.id) === String(id)
         ? { ...p, isRented: !isRented, occupied: !isRented }
         : p
     );
-    secureStorage.setItem("myProperties", updated);
+    secureStorage.setItem("myProperties", updated, user.uid);
     setIsRented((prev) => !prev);
     setOccupied((prev) => !prev);
     setActionLoading((prev) => ({ ...prev, rent: false }));
@@ -153,6 +164,7 @@ export default function PropertyDetails() {
             <p className="font-semibold text-red-600 dark:text-red-300">${property.expenses}</p>
           </div>
         </div>
+        {/* <h1 className="text-3xl font-bold text-blue-800 mb-2 dark:text-blue-200">Near By</h1> */}
         <div className="mb-6">
           <iframe
             src={embedUrl}
