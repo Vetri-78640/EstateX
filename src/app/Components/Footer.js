@@ -21,10 +21,10 @@ export default function Footer() {
       setError('Please enter a valid email address.');
       return;
     }
-  
+
     setError('');
     setShowPopup(true);
-    setTimeout(() => setShowPopup(false), 3000);
+    setTimeout(() => setShowPopup(false), 2000);
     setEmail('');
   };
 
@@ -64,11 +64,8 @@ export default function Footer() {
 
       <AnimatePresence>
         {showPopup && (
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: 20 }}
-            className="absolute bottom-6 left-1/2 transform -translate-x-1/2 bg-green-600/90 text-white px-4 py-2 rounded shadow-lg z-50 backdrop-blur"
+          <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: 20 }}
+            className="text-center py-4 max-[425px]:text-[0.6rem] px-4 sm:px-6 text-slate-600 dark:text-slate-300 text-sm border-t border-white/60 dark:border-white/20 mt-6 bg-transparent rounded-full shadow-lg border-b-2 border-white/30 dark:border-b-2 dark:border-white/20 backdrop-blur-md w-[60%] max-w-md mx-auto"
           >
             Successfully subscribed!
           </motion.div>

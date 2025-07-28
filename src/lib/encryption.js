@@ -1,12 +1,12 @@
-// Encryption utility for localStorage
-const ENCRYPTION_KEY = process.env.NEXT_PUBLIC_ENCRYPTION_KEY || 'estatex-secure-key-2024';
+// Encryption utility for localStorage as i'm a one who is concerned about security but also want to keep it simple for now!
+const ENCRYPTION_KEY = process.env.NEXT_PUBLIC_ENCRYPTION_KEY;
 
-// Simple encryption function (for demo purposes)
-// In production, use a more robust encryption library like crypto-js
+// Simple encryption function (for demo purposes only but stil will see if its fine or not man!
+// In production, use a more robust encryption library like crypto-js but maybe will not go that great man!
 export const encryptData = (data) => {
   try {
     const jsonString = JSON.stringify(data);
-    // Simple base64 encoding with a custom key
+    // Simple base64 encoding with a custom key but it's a basic thing so yeah!
     const encoded = btoa(jsonString + ENCRYPTION_KEY);
     return encoded;
   } catch (error) {
@@ -18,13 +18,11 @@ export const encryptData = (data) => {
 export const decryptData = (encryptedData) => {
   try {
     if (!encryptedData) return null;
-    
-    // Check if data is base64 encoded (encrypted)
+    // Check if data is base64 encoded (encrypted) and i think its cool!
     const isBase64 = /^[A-Za-z0-9+/]*={0,2}$/.test(encryptedData);
-    
     if (isBase64) {
       try {
-        // Try to decrypt as base64
+        // Try to decrypt as base64 which we have it stored in .env
         const decoded = atob(encryptedData);
         // Check if it contains our encryption key
         if (decoded.includes(ENCRYPTION_KEY)) {
@@ -117,6 +115,7 @@ const migrateSharedDataToUserSpecific = (userId) => {
 };
 
 // User-specific storage key generator
+// This function generates a unique key for each user based on their ID
 const getUserStorageKey = (baseKey, userId) => {
   if (!userId) {
     console.warn('No user ID provided, using fallback key');
@@ -173,6 +172,8 @@ export const secureStorage = {
     try {
       if (userId) {
         // Clear only user-specific data
+        // This will remove all keys that match the user ID
+        console.log(`Clearing data for user: ${userId}`);
         const keys = Object.keys(localStorage);
         keys.forEach(key => {
           if (key.includes(`_user_${userId}`)) {

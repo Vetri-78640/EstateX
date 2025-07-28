@@ -162,18 +162,16 @@ export default function Insights() {
 
           {/* State Cards Grid */}
           <section>
-            <h2 className="text-2xl font-bold text-blue-800 mb-8 text-center tracking-tight dark:text-white">State Insights</h2>
+            <h2 className="text-2xl font-bold text-blue-800 mb-8 text-center tracking-tight transition-transform duration-200 ">State Insights</h2>
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-10">
               {data.insights.map((state, idx) => (
                 <motion.div
                   key={state.state}
                   initial={{ opacity: 0, y: 20 }}
                   animate={{ opacity: 1, y: 0 }}
-                  transition={{ duration: 0.15, delay: idx * 0.05 }}
-                  className="bg-white/10 dark:bg-slate-900/60 backdrop-blur-md border border-white/20 dark:border-white/20 rounded-3xl shadow-xl p-8 flex flex-col min-h-[300px] group overflow-visible transform"
-                  whileHover={{ scale: 1.05 }}
+                  whileHover={{ scale: 1.03 }}
                   whileTap={{ scale: 0.98 }}
-
+                  className="bg-white/10 dark:bg-slate-900/60 backdrop-blur-md border border-white/20 dark:border-white/20 rounded-3xl shadow-xl p-8 flex flex-col min-h-[300px] group overflow-visible transform transition-transform duration-300"
                 >
                   <h3 className="text-2xl font-extrabold text-blue-700 mb-6 text-center dark:text-blue-100">{state.state}</h3>
 

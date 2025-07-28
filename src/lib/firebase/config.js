@@ -1,8 +1,6 @@
-import { initializeApp } from 'firebase/app';
+import { initializeApp, getApps } from 'firebase/app';
 import { getAuth } from 'firebase/auth';
 
-// Your web app's Firebase configuration
-// Using environment variables for security
 const firebaseConfig = {
   apiKey: process.env.NEXT_PUBLIC_FIREBASE_API_KEY,
   authDomain: process.env.NEXT_PUBLIC_FIREBASE_AUTH_DOMAIN,
@@ -26,40 +24,34 @@ console.log('Firebase Config Debug:', {
   currentDomain: typeof window !== 'undefined' ? window.location.hostname : 'server'
 });
 
-// Check if we're in the browser and have valid config
 const isClient = typeof window !== 'undefined';
 const hasValidConfig = firebaseConfig.apiKey && firebaseConfig.projectId;
 
 let app = null;
 let auth = null;
+console.log('Firebase Config Debug:', {
+  apiKey: firebaseConfig.apiKey ? 'SET' : 'MISSING',
+  authDomain: firebaseConfig.authDomain ? 'SET' : 'MISSING',
+  projectId: firebaseConfig.projectId ? 'SET' : 'MISSING',
+  // ...
+});
 
 if (isClient && hasValidConfig) {
   try {
-    // Initialize Firebase
-    app = initializeApp(firebaseConfig);
+    // ✅ Prevent re-initialization
+    app = getApps().length ? getApps()[0] : initializeApp(firebaseConfig);
     auth = getAuth(app);
+
     console.log('✅ Firebase initialized successfully');
     console.log('✅ Auth object created:', !!auth);
   } catch (error) {
     console.error('❌ Firebase initialization error:', error);
   }
 } else if (!isClient) {
-  // Server-side: return null to prevent SSR issues
   console.warn('⚠️ Firebase not initialized on server-side');
 } else {
-  console.error('❌ Firebase configuration is missing required environment variables');
-  console.error('Missing variables:', {
-    apiKey: !firebaseConfig.apiKey,
-    projectId: !firebaseConfig.projectId,
-    authDomain: !firebaseConfig.authDomain
-  });
-  
-  // Show user-friendly error
-  if (typeof window !== 'undefined') {
-    console.error('🔧 To fix this: Add environment variables to Vercel dashboard');
-    console.error('🔧 Go to: Vercel Dashboard → Your Project → Settings → Environment Variables');
-  }
+  console.error('❌ Firebase config missing required env variables');
 }
 
 export { auth };
-export default app; 
+export default app;

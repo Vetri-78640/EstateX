@@ -6,7 +6,7 @@ import { ThemeProvider } from './Components/ThemeProvider'
 import { Analytics } from "@vercel/analytics/next"
 
 export const metadata = {
-  title: 'Real Estate Tracker',
+  title: 'EstateX - Real Estate Management',
   description: 'Track your real estate investments in real-time',
 }
 

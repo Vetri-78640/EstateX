@@ -29,8 +29,7 @@ export default function PerformanceGraph({ properties }) {
   };
 
   const options = {
-    responsive: true,
-    maintainAspectRatio: false,
+    responsive: true, maintainAspectRatio: false, 
     plugins: {
       legend: {
         position: 'bottom',

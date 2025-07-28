@@ -51,7 +51,7 @@ export default function Signup() {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-white/20 to-blue-100/30 dark:from-slate-900 dark:to-slate-800 px-4 py-12 sm:px-6 lg:px-8">
+    <div className="min-h-screen flex items-center justify-center  dark:from-slate-900 dark:to-slate-800 px-4 py-12 sm:px-6 lg:px-8">
       <div className="w-full max-w-md space-y-8 bg-white/10 dark:bg-slate-900/30 border border-white/20 backdrop-blur-lg shadow-xl rounded-3xl px-6 py-8">
         <div className="text-center">
           <h2 className="text-2xl sm:text-3xl font-bold text-gray-800 dark:text-white">
@@ -72,36 +72,17 @@ export default function Signup() {
         )}
 
         <form onSubmit={handleEmailSignUp} className="space-y-4">
-          <input
-            type="email"
-            placeholder="Email"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-            required
+          <input type="email" placeholder="Email" value={email} onChange={(e) => setEmail(e.target.value)} required
             className="w-full px-4 py-3 rounded-full bg-white/30 dark:bg-slate-800/40 border border-white/30 dark:border-slate-600 text-sm text-gray-800 dark:text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-400 dark:focus:ring-blue-600 backdrop-blur-md"
           />
-          <input
-            type="password"
-            placeholder="Password"
-            autoComplete="new-password"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-            required
+          <input type="password" placeholder="Password" autoComplete="new-password" value={password} onChange={(e) => setPassword(e.target.value)} required
             className="w-full px-4 py-3 rounded-full bg-white/30 dark:bg-slate-800/40 border border-white/30 dark:border-slate-600 text-sm text-gray-800 dark:text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-400 dark:focus:ring-blue-600 backdrop-blur-md"
           />
-          <input
-            type="password"
-            placeholder="Confirm Password"
-            autoComplete="new-password"
-            value={confirmPassword}
-            onChange={(e) => setConfirmPassword(e.target.value)}
-            required
+          <input type="password" placeholder="Confirm Password" autoComplete="new-password" value={confirmPassword} onChange={(e) => setConfirmPassword(e.target.value)} required
             className="w-full px-4 py-3 rounded-full bg-white/30 dark:bg-slate-800/40 border border-white/30 dark:border-slate-600 text-sm text-gray-800 dark:text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-400 dark:focus:ring-blue-600 backdrop-blur-md"
           />
-          <button
-            type="submit"
-            disabled={isLoading}
-            className="w-full py-3 px-4 rounded-full bg-blue-700 hover:bg-blue-800 text-white font-semibold text-sm shadow-md transition disabled:opacity-60 disabled:cursor-not-allowed backdrop-blur-sm"
+          <button type="submit" disabled={isLoading}
+            className="w-full flex justify-center items-center py-3 px-4 bg-white/30 dark:bg-slate-800/40 text-blue-700 dark:text-blue-200 border border-blue-400 dark:border-blue-300 rounded-full shadow-md hover:border-blue-500 transition backdrop-blur-md text-sm"
           >
             {isLoading ? 'Creating account...' : 'Create Account'}
           </button>

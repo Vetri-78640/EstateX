@@ -55,8 +55,8 @@ export default function Login() {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-white/10 backdrop-blur-sm px-4 py-12 sm:px-6 lg:px-8">
-      <div className="w-full max-w-md space-y-6 bg-white/20 backdrop-blur-md rounded-3xl shadow-xl p-8 border border-white/30">
+    <div className="min-h-screen flex items-center justify-center backdrop-blur-sm px-4 py-12 sm:px-6 lg:px-8">
+      <div className="w-full max-w-md space-y-6 backdrop-blur-md rounded-3xl shadow-xl p-8 border border-white/30">
         <div className="text-center">
           <h2 className="text-3xl font-bold text-gray-900 dark:text-white">Welcome back</h2>
           <p className="mt-2 text-sm text-gray-600 dark:text-gray-300">
@@ -110,7 +110,7 @@ export default function Login() {
           <button
             type="submit"
             disabled={isLoading}
-            className="w-full py-3 px-4 bg-white/30 backdrop-blur border border-blue-400 text-blue-700 font-medium rounded-full shadow-sm hover:border-blue-500 hover:text-blue-800 focus:ring-2 focus:ring-blue-500 disabled:opacity-50 transition-all"
+            className="w-full flex justify-center items-center py-3 px-4 bg-white/30 dark:bg-slate-800/40 text-blue-700 dark:text-blue-200 border border-blue-400 dark:border-blue-300 rounded-full shadow-md hover:border-blue-500 transition backdrop-blur-md text-sm"
           >
             {isLoading ? 'Signing in...' : 'Sign in'}
           </button>
@@ -126,7 +126,7 @@ export default function Login() {
           <button
             onClick={handleGoogleSignIn}
             disabled={isLoading}
-            className="w-full flex justify-center items-center py-3 px-4 bg-white/30 backdrop-blur border border-blue-400 text-blue-700 font-medium rounded-full shadow-sm hover:border-blue-500 hover:text-blue-800 focus:ring-2 focus:ring-blue-500 disabled:opacity-50 transition-all"
+            className="w-full flex justify-center items-center py-3 px-4 bg-white/30 dark:bg-slate-800/40 text-blue-700 dark:text-blue-200 border border-blue-400 dark:border-blue-300 rounded-full shadow-md hover:border-blue-500 transition backdrop-blur-md text-sm"
           >
             <svg className="h-5 w-5 mr-2" viewBox="0 0 24 24" fill="currentColor">
               <path d="M12.545,10.239v3.821h5.445c-0.712,2.315-2.647,3.972-5.445,3.972c-3.332,0-6.033-2.701-6.033-6.032s2.701-6.032,6.033-6.032c1.498,0,2.866,0.549,3.921,1.453l2.814-2.814C17.503,2.988,15.139,2,12.545,2C7.021,2,2.543,6.477,2.543,12s4.478,10,10.002,10c8.396,0,10.249-7.85,9.426-11.748L12.545,10.239z" />

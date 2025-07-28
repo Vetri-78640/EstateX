@@ -87,7 +87,7 @@ export default function Properties() {
             
             {/* Main Content */}
             <div className="lg:w-3/4">
-              {/* ✅ Correct search bar props */}
+              {/*  Correct search bar props */}
               <SearchBar value={search} onChange={e => setSearch(e.target.value)} />
               
               {/* Properties Grid */}

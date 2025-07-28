@@ -28,15 +28,7 @@ const Navbar = () => {
           onClick={toggleMenu}
           className="md:hidden p-2 rounded-md hover:bg-gray-700 focus:outline-none"
         >
-          <svg
-            className="h-6 w-6"
-            fill="none"
-            strokeLinecap="round"
-            strokeLinejoin="round"
-            strokeWidth="2"
-            viewBox="0 0 24 24"
-            stroke="currentColor"
-          >
+          <svg className="h-6 w-6" fill="none" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" viewBox="0 0 24 24" stroke="currentColor" >
             {isMenuOpen ? (
               <path d="M6 18L18 6M6 6l12 12" />
             ) : (
