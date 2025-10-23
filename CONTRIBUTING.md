@@ -1,135 +1,197 @@
-Contributing to EstateX
+# Contributing to EstateX
 
-Thank you for your interest in contributing to EstateX — a Real Estate Investment Tracker built with Next.js, Firebase, and Chart.js.
-Your contributions make this project better for everyone.
+Thank you for your interest in contributing to EstateX — a Real Estate Investment Tracker built with Next.js, Firebase, and Chart.js. Your contributions make this project better for everyone. This guide is focused on making contributions easy to review and Hacktoberfest-friendly.
 
-This guide will help you get started and submit meaningful Pull Requests (PRs).
+---
 
-⸻
+## Table of contents
 
-How to Contribute
+- What to expect
+- Quick start
+- Local setup
+- Branching & workflow
+- Making changes
+- Commit message conventions
+- Pull request checklist
+- Hacktoberfest guidelines
+- Contribution ideas & good first issues
+- Code style
+- Tests & CI
+- Documentation
+- Code of conduct
+- Need help?
 
-1. Fork the Repository
+---
 
-Click the Fork button at the top of this repository to create your own copy.
+## What to expect
 
-⸻
+- We welcome contributions of any size: bug fixes, docs, tests, UI improvements, or new features.
+- Keep PRs focused and atomic — this helps reviewers and speeds up merges.
+- Maintainers may request changes; please respond to review comments.
 
-2. Clone Your Fork
+---
 
-Clone the forked repository to your local machine:
+## Quick start
 
-git clone https://github.com/<your-username>/EstateX.git
-cd EstateX
+1. Fork this repository.
+2. Clone your fork:
+   git clone https://github.com/<your-username>/EstateX.git
+   cd EstateX
+3. Create a branch:
+   git checkout -b feature/short-description
+4. Install dependencies and run locally:
+   npm install
+   npm run dev
+5. Make changes, run lint/tests, then push and open a PR.
 
+---
 
-⸻
+## Local setup
 
-3. Create a New Branch
+- Install dependencies:
+  npm install
 
-Always work in a separate branch for clarity and easier review:
+- Run the app locally:
+  npm run dev
+  The app runs at: http://localhost:3000
 
-git checkout -b feature/add-dashboard-widget
+- Lint and (if present) run tests:
+  npm run lint
+  npm run test
 
-Use short and descriptive branch names such as:
-	•	feature/add-property-search
-	•	fix/dashboard-layout
-	•	docs/update-readme
+If you add tests or change behavior, include or update tests accordingly.
 
-⸻
+---
 
-4. Install Dependencies
+## Branching & workflow
 
-Before making changes, set up your environment:
+- Always work in a branch — never commit directly to main.
+- Use descriptive branch names:
+  - feature/add-property-filter
+  - fix/dashboard-responsive
+  - docs/update-contributing
+- Rebase or merge main before opening a PR to minimize conflicts:
+  git fetch origin
+  git checkout your-branch
+  git rebase origin/main
+  (or git merge origin/main)
 
-npm install
-npm run dev
+---
 
-This runs the project locally at http://localhost:3000.
+## Making changes
 
-⸻
+- Keep changes small and scoped to a single purpose.
+- Update or add documentation when behavior or APIs change.
+- For UI changes, include screenshots or short GIFs in the PR description.
+- If adding data or secrets for local testing, never commit real credentials. Use .env.example for sample keys.
 
-5. Make Your Changes
+---
 
-You can contribute in the following ways:
-	•	Add or improve UI components (e.g., charts, dashboards)
-	•	Fix existing bugs or improve responsiveness
-	•	Write or improve documentation
-	•	Add new features (e.g., authentication improvements, property filters)
-	•	Improve API integrations or add dummy data enhancements
+## Commit message conventions
 
-⸻
+Follow concise, conventional commit-style messages:
 
-6. Stage, Commit, and Push
+- feat: add ROI trend chart to dashboard
+- fix: correct mobile layout for dashboard
+- docs: update contributing guide
+- chore: update dependencies
 
-After making your changes:
+Keep commits atomic and descriptive.
 
-git add .
-git commit -m "feat: add ROI trend chart to dashboard"
-git push origin feature/add-dashboard-widget
+---
 
+## Pull request checklist
 
-⸻
+Before opening a PR:
 
-7. Open a Pull Request
-	1.	Go to your fork on GitHub.
-	2.	Click Compare & pull request.
-	3.	Set:
-	•	Base repository: Vetri-78640/EstateX → main
-	•	Head repository: <your-username>/EstateX → your-branch
-	4.	Add a clear title and detailed description of what your PR does.
-	5.	Submit the PR.
+- [ ] Branch is up to date with main and merges cleanly
+- [ ] Code follows project style and lint rules
+- [ ] Tests pass locally (and new tests are included when applicable)
+- [ ] Documentation updated for any behavior changes
+- [ ] PR title and description clearly explain what, why, and any trade-offs
+- [ ] Reference related issues (e.g., "Fixes #12") where applicable
 
-⸻
+In your PR description, include steps to reproduce and screenshots for UI changes.
 
-Hacktoberfest 2025 Guidelines
+---
 
-We welcome Hacktoberfest contributors. Please follow these:
-	•	Only work on issues labeled hacktoberfest
-	•	Keep PRs focused, meaningful, and small
-	•	Avoid spammy or automated PRs — they’ll be marked invalid
-	•	Update documentation if your code changes how the app works
-	•	Mention related issues in your PR description (e.g., “Fixes #12”)
+## Hacktoberfest guidelines
 
-⸻
+We welcome Hacktoberfest contributions. To make your PRs eligible and easy to review, follow these rules:
 
-Contribution Ideas
+- Work on issues labeled `hacktoberfest` or explicitly marked as suitable for beginners.
+- Keep each PR focused and small — avoid large sweeping changes in a single PR.
+- Do not submit spammy, trivial, or automated PRs. PRs must add meaningful value.
+- Tag your PR description with the word `hacktoberfest`. Maintainers may add the official label.
+- Include a clear title, description, and related issue references (e.g., "Fixes #<issue>").
+- Add tests or documentation updates if your change affects behavior.
+- Be responsive to review feedback — maintainers may request edits.
 
-Here are a few ways to contribute:
-	•	Add a new dashboard graph for market trends
-	•	Implement property comparison or filter feature
-	•	Enhance Firebase authentication (e.g., Google login)
-	•	Add dark/light mode toggle
-	•	Improve UI transitions with Tailwind animations
-	•	Create a dummy API dataset for realistic testing
+Maintainers reserve the right to mark PRs invalid if they do not follow these guidelines.
 
-⸻
+---
 
-Code Style
-	•	Keep your code clean, readable, and efficient
-	•	Follow Next.js best practices
-	•	Use Tailwind CSS for styling
-	•	Keep variable names short but meaningful
-	•	Avoid unnecessary comments unless explaining complex logic
+## Contribution ideas & good first issues
 
-⸻
+If you're looking for something to do, consider:
 
-Code of Conduct
+- Add a new dashboard graph for market trends
+- Implement property comparison or advanced filters
+- Improve Firebase authentication (e.g., Google login)
+- Add dark/light mode and persist setting
+- Improve UI transitions/animations with Tailwind
+- Create realistic dummy API data for local testing
+- Fix accessibility issues
 
-Please be respectful and inclusive.
-Harassment, discrimination, or toxicity of any kind will not be tolerated.
+Look for issues labeled `good first issue` or `hacktoberfest`. If none exist, open an issue proposing your change before submitting a large PR.
 
-⸻
+---
 
-Need Help?
+## Code style
+
+- Follow Next.js best practices.
+- Use Tailwind CSS for styles and keep utility classes readable.
+- Keep functions small and single-purpose.
+- Prefer descriptive names over overly-short identifiers.
+- Avoid commented-out code; remove dead code instead.
+- Explain complex logic with brief comments, not obvious comments.
+
+---
+
+## Tests & CI
+
+- Add tests for bug fixes and new features where reasonable.
+- Run tests and linters locally before submitting a PR.
+- CI may run automated checks on every PR — fix any issues the CI reports.
+
+---
+
+## Documentation
+
+- Update README, component-level docs, or the wiki when you change behavior.
+- Include usage examples and screenshots for UI additions.
+- Add or update an entry in CHANGELOG.md when adding visible features (if present).
+
+---
+
+## Code of conduct
+
+Be respectful and inclusive. Harassment, discrimination, or toxic behavior will not be tolerated. By contributing, you agree to follow the project's code of conduct.
+
+---
+
+## Need help?
 
 If you get stuck:
-	•	Check existing Issues
-	•	Open a new issue describing your problem or idea
-	•	Tag your PR with hacktoberfest if applicable
 
-⸻
+- Search existing issues first.
+- Open a new issue describing the problem, expected behavior, and steps to reproduce.
+- Ask for help on your PR if you need guidance from maintainers.
 
-Let’s Build EstateX Together
+When opening an issue, provide: environment, steps to reproduce, expected vs actual behavior, and any error messages.
 
-Thank you for contributing — your efforts make EstateX a better tool for real estate investors everywhere.
+---
+
+## Thanks
+
+Thanks for contributing — your work helps make EstateX better for real estate investors everywhere.
