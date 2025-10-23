@@ -4,6 +4,7 @@ import Footer from './Components/Footer'
 import { AuthContextProvider } from '@/lib/firebase/AuthContext'
 import { ThemeProvider } from './Components/ThemeProvider'
 import { Analytics } from "@vercel/analytics/next"
+import { FaLinkedin, FaInstagram } from 'react-icons/fa'
 
 export const metadata = {
   title: 'EstateX - Real Estate Management',
@@ -63,17 +64,19 @@ export default function RootLayout({ children }) {
             href="https://www.linkedin.com/in/vetriselvan-r-a238b7263"
             target="_blank"
             rel="noopener noreferrer"
-            style={{ color: '#0077b5', textDecoration: 'none' }}
+            style={{ color: '#0077b5', textDecoration: 'none', display: 'inline-flex', alignItems: 'center', gap: '0.5rem' }}
           >
-            LinkedIn
+            <FaLinkedin aria-hidden="true" style={{ width: '1.5rem', height: '1.5rem' }} />
+            <span>LinkedIn</span>
           </a>
           <a
             href="https://www.instagram.com/im.vetri"
             target="_blank"
             rel="noopener noreferrer"
-            style={{ color:'rgb(247, 88, 88)', textDecoration: 'none' }}
+            style={{ color:'rgb(247, 88, 88)', textDecoration: 'none', display: 'inline-flex', alignItems: 'center', gap: '0.5rem' }}
           >
-            Instagram
+            <FaInstagram aria-hidden="true" style={{ width: '1.5rem', height: '1.5rem' }} />
+            <span>Instagram</span>
           </a>
         </div>
       </div>

@@ -8,7 +8,7 @@ export default function Footer() {
   const [showPopup, setShowPopup] = useState(false);
   const [error, setError] = useState('');
 
-  const handleSubscribe = (e) => { //form logic for email validation which is the strictest email validation ever that i tried to implement//
+  const handleSubscribe = (e) => { //form logic for email validation which is the strictest email validation ever that I tried to implement//
     e.preventDefault();
     const strictEmailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
     const localPart = email.split('@')[0];
@@ -29,15 +29,17 @@ export default function Footer() {
   };
 
   return (
-    <footer  style={{ borderRadius: '9999px' }} className="mt-20 mb-10 bg-white/20 backdrop-blur-md border border-white/30 text-slate-800 px-4 sm:px-10 py-8 shadow-lg w-[80%] max-w-[1600px] mx-auto rounded-3xl flex flex-col items-center justify-between relative dark:bg-slate-900/60 dark:text-slate-100 dark:border-white/20">
-      <div className="w-full flex flex-col md:flex-row gap-6 text-sm md:text-base items-center justify-center gap-x-8">
-        <div className="space-y-0.5 w-full md:w-auto text-center md:text-left"> {/* Footer Summary*/}
-          <h2 className="text-lg max-[425px]:text-[1rem] px-10 sm:px-6 font-semibold tracking-wide text-slate-900 dark:text-white">Real Estate Tracker</h2>
+    <footer
+        style={{ borderRadius: '9999px' }}
+             className="mt-20 mb-10 bg-white/20 backdrop-blur-md border border-white/30 text-slate-800 px-6 sm:px-14 py-8 shadow-lg w-[80%] max-w-[1600px] mx-auto rounded-3xl flex flex-col items-center justify-between relative dark:bg-slate-900/60 dark:text-slate-100 dark:border-white/20">
+      <div className="w-full flex flex-col md:flex-row gap-6 text-sm md:text-base items-start justify-center gap-x-8">
+        <div className="py-2 w-full md:w-auto text-center md:text-left"> {/* Footer Summary*/}
+          <h3 className="text-lg max-[425px]:text-[1rem] px-10 sm:px-6 font-semibold tracking-wide text-slate-900 dark:text-white">Real Estate Tracker</h3>
           <p className="text-slate-700 max-[425px]:text-[0.7rem] px-10 sm:px-6 dark:text-slate-300">Track investments, analyze trends, rental income, and grow your portfolio.</p>
         </div>
 
-        <div className="space-y-0.5 w-full md:w-auto text-center md:text-left"> {/*Stay updated with our newsletter(subscribe) */}
-          <h3 className="text-md font-semibold text-slate-900 dark:text-white">Stay Updated</h3>
+        <div className="py-2 w-full md:w-auto text-center md:text-left"> {/*Stay updated with our newsletter(subscribe) */}
+          <h3 className="text-lg font-semibold text-slate-900 dark:text-white">Stay Updated</h3>
           <p className="text-slate-600 dark:text-slate-300">Join our newsletter for updates on market trends and features.</p>
           <form onSubmit={handleSubscribe} className="flex flex-col sm:flex-row gap-2 mt-2 w-full">
             <input

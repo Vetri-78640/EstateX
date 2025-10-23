@@ -73,7 +73,7 @@ export default function PerformanceGraph({ properties }) {
       <h2 className="text-3xl font-extrabold mb-10 text-gray-800 text-center tracking-tight dark:text-white">Income vs Expenses</h2>
       <div className="flex flex-wrap justify-center gap-16 w-full">
         {properties.map((property, index) => (
-          <div key={property.id} className="flex flex-col items-center justify-center w-full md:w-1/2 lg:w-1/3 px-4">
+          <div key={property.id} className="flex flex-col items-center justify-center w-full px-4">
             <h3 className="text-xl font-semibold mb-6 text-gray-700 text-center dark:text-blue-100">{property.name}</h3>
             <div className="flex justify-center items-center w-full mb-6">
               <div className="w-full max-w-md h-[320px]">
