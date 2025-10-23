@@ -19,7 +19,7 @@ const Navbar = () => {
   return (
     <nav  className="bg-white/20 backdrop-blur-md border border-white/30 text-gray-900 px-2 py-3 shadow-lg w-full md:w-[75%] max-w-[1000px] mx-auto rounded-none md:rounded-full flex items-center justify-between sticky top-0 md:top-6 z-50 dark:bg-slate-900/60 dark:text-slate-100 dark:border-white/20" >
       <div className="flex justify-between items-center w-full">
-        <Link href="/" className="text-2xl pl-4 font-bold text-[#6F8FAF] tracking-wider">
+        <Link href="/" className="text-2xl pl-4 font-medium text-[#6F8FAF] tracking-wider">
           EstateX
         </Link>
 
@@ -111,7 +111,7 @@ const Navbar = () => {
               <li>
                 <Link 
                   href="/signup" 
-                  className="btn-glass px-4 py-2 rounded-full transition-colors duration-200 border border-blue-300 text-blue-700 hover:border-blue-400 hover:text-blue-800 dark:border-blue-200/30 dark:text-blue-100 dark:hover:text-blue-200"
+                  className="btn-glass px-4 py-2.5 rounded-full transition-colors duration-200 border border-blue-300 text-blue-700 hover:border-blue-400 hover:text-blue-800 dark:border-blue-200/30 dark:text-blue-100 dark:hover:text-blue-200"
                   style={{ borderRadius: '9999px' }}
                 >Sign Up</Link>
               </li>

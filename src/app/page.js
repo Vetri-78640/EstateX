@@ -156,13 +156,13 @@ export default function Home() {
           </h2>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-6 md:gap-8">
             {[
-              "EstateX helped me consolidate and understand my ROI across 6 properties!",
               "I love the real-time updates and simple dashboard views!",
+              "EstateX helped me consolidate and understand my ROI across 6 properties!"
             ].map((testimonial, i) => (
               <motion.blockquote
                 key={i}
                 style={{ borderRadius: '9999px' }}
-                className="bg-glass p-4 sm:p-6 rounded-lg shadow transform"
+                className="bg-glass p-4 sm:p-6 shadow transform flex justify-center items-center"
                 whileHover={{ scale: 1.05, boxShadow: '0 8px 32px 0 rgba(31,38,135,0.24)' }}
                 whileTap={{ scale: 0.98 }}
                 transition={{ type: 'spring', stiffness: 260, damping: 20 }}
